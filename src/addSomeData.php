@@ -5,15 +5,15 @@ require_once('index.php');
 
 echo '<!doctype HTML><html><bead><meta charset="utf-8">';
 
-echo 'getNetworks:';
-var_dump($wioStruct->getNetworks());
+//echo 'getNetworks:';
+//var_dump($wioStruct->getNetworks());
 
 $szpId = $wioStruct->addNetwork('Szlachetna paczka');
 $apId = $wioStruct->addNetwork('Akademia Przyszłości');
 
-var_dump($wioStruct->getNetworkId('Szlachetna paczka'));
+$wioStruct->getNetworkId('Szlachetna paczka');
 
-var_dump($apId);
+$apId;
 
 $wioStruct->getNetworkAdministrativeId();
 
@@ -35,12 +35,30 @@ $wioStruct->addNodeType(['networkId'=>$szpId],'Rejon');
 
 
 
-echo 'getNodeTypes:';
-var_dump($wioStruct->getNodeTypes());
+// echo 'getNodeTypes:';
+// var_dump($wioStruct->getNodeTypes());
+//
+//
+// echo 'getNodeTypes: (SZP)';
+// var_dump($wioStruct->getNodeTypes(['networkId'=>$szpId]));
+//
+// echo 'getNodeTypes: (AP)';
+// var_dump($wioStruct->getNodeTypes(['networkName'=>'Akademia Przyszłości']));
 
 
-echo 'getNodeTypes: (SZP)';
-var_dump($wioStruct->getNodeTypes(['networkId'=>$szpId]));
 
-echo 'getNodeTypes: (AP)';
-var_dump($wioStruct->getNodeTypes(['networkName'=>'Akademia Przyszłości']));
+$wioStruct->addNode(['nodeTypeId'=>6], 'Kolegium numer X');
+$wioStruct->addNode(['nodeTypeName'=>'Kolegium','networkId'=>$apId], 'Kolegium numer Y');
+$wioStruct->addNode(['nodeTypeName'=>'Kolegium','networkName'=>'Akademia Przyszłości'], 'Kolegium numer Z');
+
+echo 'getNodes:';
+var_dump($wioStruct->getNodes());
+
+echo 'getNodes: (AP)';
+var_dump($wioStruct->getNodes(['nodeTypeId'=>6]));
+
+echo 'getNodes: (AP)';
+var_dump($wioStruct->getNodes(['nodeTypeName'=>'Kolegium','networkId'=>$apId]));
+
+echo 'getNodes: (AP)';
+var_dump($wioStruct->getNodes(['nodeTypeName'=>'Kolegium','networkName'=>'Akademia Przyszłości']));
