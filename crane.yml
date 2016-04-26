@@ -3,7 +3,7 @@ containers:
         image: wiosna/mariadb
         dockerfile: ../docker-images/mysql
         run:
-            volume: ["/data/wiosna/wio-forms/dev/mysql:/var/lib/mysql"]
+            volume: ["/data/wiosna/wio-struct/dev/mysql:/var/lib/mysql"]
             net: host
             detach: true
     web:
@@ -30,13 +30,13 @@ containers:
         dockerfile: ../docker-images/mysql
         run:
             net: host
-            volume: [".:/wio-forms"]
+            volume: [".:/wio-struct"]
             interactive: true
             tty: true
             rm: true
             entrypoint: bash
             cmd: ["-c", "bash"]
-            workdir: /wio-forms
+            workdir: /wio-struct
     mailcatcher:
         image: zolweb/docker-mailcatcher
         run:
