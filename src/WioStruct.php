@@ -39,7 +39,7 @@ class WioStruct
         }
         else
         {
-            $this->errorLog->errorLog('Notice: Network "'.$name.'" [id:'.$networkId.'] already exists.');
+            $this->errorLog->errorLog('Notice: Nerwork "'.$name.'" [id:'.$networkId.'] already exists.');
             return $networkId;
         }
     }
@@ -384,14 +384,53 @@ class WioStruct
         }
         else
         {
-            $this->errorLog->errorLog('Notice: setLink() [id:'.$linkId->id.'] is already set.');
+            $this->errorLog->errorLog('Notice: Link [id:'.$linkId->id.'] is already set.');
             return $linkId->id;
         }
     }
 
-    public function showAllLinks($settings)
+    # Testing Method
+    public function showLinksWithNodes($settings = [])
     {
+        $nodeTypesTable = $this->getNodeTypes();
+        $nodesTable = $this->getNodes();
 
+        $nodeTypes = [];
+        foreach ($nodeTypesTable as $nodeType)
+        {
+            $nodeTypes[ $nodeType->id ]=$nodeType;
+        }
+
+        $nodes = [];
+        foreach ($nodesTable as $node)
+        {
+            $nodes[ $node->id ]=$node;
+        }
+
+        $query = $this->qb->table('wio_struct_links')->select('*');
+        $links = $query->get();
+
+        $html = '';
+        foreach ($links as $link)
+        {
+            $html .= '<tr><td>#'.$link->id.'</td>';
+            $html .= '<td>('.$nodeTypes[ $nodes[ $link->node_parent_id ]->node_type_id ]->name.')</td>';
+            $html .= '<td>'.$nodes[ $link->node_parent_id ]->name.'</td>';
+            if ($link->auto_generated==0)
+            {
+                $html .='<td><b>=&gt;</b></td>';
+            }
+            else
+            {
+                $html .='<td>-&gt;</td>';
+            }
+            $html .= '<td>('.$nodeTypes[ $nodes[ $link->node_children_id ]->node_type_id ]->name.')</td>';
+            $html .= '<td>'.$nodes[ $link->node_children_id ]->name.'</td>';
+            $html .= '</tr>';
+
+        }
+
+        return $html;
     }
 
     public function getNodeLinks(){}

@@ -13,8 +13,6 @@ $apId = $wioStruct->addNetwork('Akademia Przyszłości');
 
 $wioStruct->getNetworkId('Szlachetna paczka');
 
-$apId;
-
 $wioStruct->getNetworkAdministrativeId();
 
 $admId = $wioStruct->getNetworkAdministrativeId();
@@ -159,3 +157,8 @@ $wioStruct->addLink(['nodeId'=>$miasto1],['nodeId'=>$szkola3]);
 
 $szkola4 = $wioStruct->addNode(['nodeTypeId'=>$szkolyId],'Czeska szkoła jedzenia sera');
 $wioStruct->addLink(['nodeId'=>$miasto6],['nodeId'=>$szkola4]);
+
+
+echo '<table>';
+echo $wioStruct->showLinksWithNodes();
+echo '</table>';
