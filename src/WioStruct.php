@@ -164,7 +164,11 @@ class WioStruct
 
     public function getNodeTypes($settings = [])
     {
-        $subQuery = $this->settingsGetNetworkSubQuery($settings);
+        $subQuery = false;
+        if (!empty($settings))
+        {
+            $subQuery = $this->settingsGetNetworkSubQuery($settings);
+        }
 
         if(is_numeric($subQuery))
         {
@@ -311,7 +315,11 @@ class WioStruct
 
     public function getNodes($settings = [])
     {
-        $subQuery = $this->settingsGetNodeTypeSubQuery($settings);
+        $subQuery = false;
+        if (!empty($settings))
+        {
+            $subQuery = $this->settingsGetNodeTypeSubQuery($settings);
+        }
 
         if(is_numeric($subQuery))
         {
@@ -376,10 +384,10 @@ class WioStruct
             $data = [
                 'node_parent_id' => $parentId,
                 'node_children_id' => $childrenId,
-                'link_type' => 0,
-                'auto_generated' => 0,
+                'auto_generated' => 0
             ];
             $insertedId = $this->qb->table('wio_struct_links')->insert($data);
+            $this->generateAutoLinks($parentId,$childrenId);
             return $insertedId;
         }
         else
@@ -387,6 +395,36 @@ class WioStruct
             $this->errorLog->errorLog('Notice: Link [id:'.$linkId->id.'] is already set.');
             return $linkId->id;
         }
+    }
+
+    public function generateAutoLinks($parentId,$nodeId)
+    {
+        $otherParents = $this->getNodeParents(['nodeId'=>$parentId]);
+
+        foreach ($otherParents as $aParent)
+        {
+            $linkId = $this->getLinkId($aParent->node_parent_id,$nodeId);
+            if ($linkId === null)
+            {
+                $data = [
+                    'node_parent_id' => $aParent->node_parent_id,
+                    'node_children_id' => $nodeId,
+                    'auto_generated' => 1
+                ];
+                $this->qb->table('wio_struct_links')->insert($data);
+            }
+        }
+    }
+
+    public function getNodeParents($settings)
+    {
+        $nodeId = $this->getNodeId($settings);
+
+        $query = $this->qb->table('wio_struct_links')
+            ->where('node_children_id',$nodeId)
+            ->select('node_parent_id');
+
+        return $query->get();
     }
 
     # Testing Method
@@ -418,11 +456,11 @@ class WioStruct
             $html .= '<td>'.$nodes[ $link->node_parent_id ]->name.'</td>';
             if ($link->auto_generated==0)
             {
-                $html .='<td><b>=&gt;</b></td>';
+                $html .='<td><strong>===&gt;</strong></td>';
             }
             else
             {
-                $html .='<td>-&gt;</td>';
+                $html .='<td>--&gt;</td>';
             }
             $html .= '<td>('.$nodeTypes[ $nodes[ $link->node_children_id ]->node_type_id ]->name.')</td>';
             $html .= '<td>'.$nodes[ $link->node_children_id ]->name.'</td>';

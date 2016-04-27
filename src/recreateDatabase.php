@@ -35,7 +35,6 @@ $queries[] = "CREATE TABLE `wio_struct_links` (
     `id` INT(11) NOT NULL AUTO_INCREMENT ,
     `node_parent_id` INT(11) NOT NULL ,
     `node_children_id` INT(11) NOT NULL ,
-    `link_type` INT(3) NOT NULL ,
     `auto_generated` INT(3) NOT NULL ,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;";
