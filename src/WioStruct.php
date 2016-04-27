@@ -33,7 +33,7 @@ class WioStruct
 
         if ($networkId === false)
         {
-            $data = array('name' => $name);
+            $data = ['name' => $name];
             $insertId = $this->qb->table('wio_struct_networks')->insert($data);
             return $insertId;
         }
@@ -65,7 +65,7 @@ class WioStruct
         }
     }
 
-    private function settingsGetNetworkSubQuery($settings)
+    private function settingsGetNetworkSubquery($settings)
     {
         if (isset($settings['networkId']))
         {
@@ -120,7 +120,7 @@ class WioStruct
             }
 
 
-            $data = array('network_id' => $networkId, 'name' => $name);
+            $data = ['network_id' => $networkId, 'name' => $name];
             $insertId = $this->qb->table('wio_struct_node_types')->insert($data);
             return $insertId;
         }
@@ -133,9 +133,9 @@ class WioStruct
 
     public function getNodeTypeId($settings, $name)
     {
-        $subQuery = $this->settingsGetNetworkSubQuery($settings);
+        $subQuery = $this->settingsGetNetworkSubquery($settings);
 
-        if(is_numeric($subQuery))
+        if (is_numeric($subQuery))
         {
             $query = $this->qb->table('wio_struct_node_types')
                 ->select('id')
@@ -167,15 +167,15 @@ class WioStruct
         $subQuery = false;
         if (!empty($settings))
         {
-            $subQuery = $this->settingsGetNetworkSubQuery($settings);
+            $subQuery = $this->settingsGetNetworkSubquery($settings);
         }
 
-        if(is_numeric($subQuery))
+        if (is_numeric($subQuery))
         {
             $query = $this->qb->table('wio_struct_node_types')
                 ->where('network_id', $subQuery);
         }
-        elseif($subQuery !== false)
+        elseif ($subQuery !== false)
         {
             $query = $this->qb->table('wio_struct_node_types')
                 ->where($this->qb->raw('network_id = ' . $this->qb->subQuery($subQuery)));
@@ -188,7 +188,7 @@ class WioStruct
         return $query->get();
     }
 
-    private function settingsGetNodeTypeSubQuery($settings)
+    private function settingsGetNodeTypeSubquery($settings)
     {
         if (isset($settings['nodeTypeId']))
         {
@@ -196,7 +196,7 @@ class WioStruct
         }
         elseif (isset($settings['nodeTypeName']))
         {
-            $subQuery = $this->settingsGetNetworkSubQuery($settings);
+            $subQuery = $this->settingsGetNetworkSubquery($settings);
 
             if (is_numeric($subQuery))
             {
@@ -258,7 +258,12 @@ class WioStruct
                 return false;
             }
 
-            $data = array('node_type_id' => $nodeTypeId, 'name' => $name, 'lat' => $lat, 'lng' => $lng);
+            $data = [
+                'node_type_id' => $nodeTypeId,
+                'name' => $name,
+                'lat' => $lat,
+                'lng' => $lng
+            ];
             $insertId = $this->qb->table('wio_struct_nodes')->insert($data);
             return $insertId;
         }
@@ -269,16 +274,16 @@ class WioStruct
         }
     }
 
-    public function getNodeId($settings)
+    public function getNodeId($settings)    // aka. settingsGetNodeId()
     {
         if (isset($settings['nodeId']))
         {
             return $settings['nodeId'];
         }
         $name = $settings['nodeName'];
-        $subQuery = $this->settingsGetNodeTypeSubQuery($settings);
+        $subQuery = $this->settingsGetNodeTypeSubquery($settings);
 
-        if(is_numeric($subQuery))
+        if (is_numeric($subQuery))
         {
             $query = $this->qb->table('wio_struct_nodes')
                 ->select('id')
@@ -318,15 +323,15 @@ class WioStruct
         $subQuery = false;
         if (!empty($settings))
         {
-            $subQuery = $this->settingsGetNodeTypeSubQuery($settings);
+            $subQuery = $this->settingsGetNodeTypeSubquery($settings);
         }
 
-        if(is_numeric($subQuery))
+        if (is_numeric($subQuery))
         {
             $query = $this->qb->table('wio_struct_nodes')
                 ->where('node_type_id', $subQuery);
         }
-        elseif($subQuery !== false)
+        elseif ($subQuery !== false)
         {
             $query = $this->qb->table('wio_struct_nodes')
                 ->where($this->qb->raw('node_type_id = ' . $this->qb->subQuery($subQuery)));
@@ -351,6 +356,40 @@ class WioStruct
         }
         $this->qb->table('wio_struct_nodes')->where('id',$nodeId)->update($data);
     }
+
+    private function settingsGetNodeSubquery($settings)
+    {
+        if (isset($settings['nodeId']))
+        {
+            return $settings['nodeId'];
+        }
+        elseif (isset($settings['nodeName']))
+        {
+            $query = $this->qb->table('wio_struct_nodes')
+                ->select('id')
+                ->where('name',$settings['nodeName']);
+
+            $subQuery = $this->settingsGetNodeTypeSubquery($settings);
+
+            if (is_numeric($subQuery))
+            {
+                $query->where('node_type_id',$subQuery);
+            }
+            else
+            {
+                $query->where($this->qb->raw('node_type_id = '.$subQuery));
+            }
+            return $query;
+        }
+        else
+        {
+            $this->errorLog->errorLog('No "nodeId" or "nodeName" in $settings');
+            return false;
+        }
+
+
+    }
+
 
     public function getLoseNodes($settings = []){}
     public function getClosestNode($lat, $lng, $settings = []){}
@@ -440,8 +479,6 @@ class WioStruct
         return $query->get();
     }
 
-
-
     # Testing Method
     public function showLinksWithNodes($settings = [])
     {
@@ -504,7 +541,7 @@ class WioStruct
 
         if ($nodeFlagsTypeId === false)
         {
-            $data = array('name' => $name);
+            $data = ['name' => $name];
             $insertId = $this->qb->table('wio_struct_node_flags_types')->insert($data);
             return $insertId;
         }
@@ -529,12 +566,9 @@ class WioStruct
             $this->errorLog->errorLog('getNodeFlagsTypeId: NodeFlagsType "'.$name.'" not found.');
             return false;
         }
-
-
     }
 
-
-    private function settingsGetNodeFlagTypeSubQuery($settings)
+    private function settingsGetNodeFlagTypeSubquery($settings)
     {
         if (isset($settings['nodeFlagsTypeId']))
         {
@@ -571,10 +605,147 @@ class WioStruct
 
 
     /*
-      NodeFlags Table
+      NodeFlags table
     */
 
 
+    public function addNodeFlag($settings, $flagData)
+    {
+        $this->errorLog->off();
+        $nodeFlagId = $this->getNodeFlagId($settings, $flagData);
+        $this->errorLog->on();
+
+        if ($nodeFlagId === false)
+        {
+            $nodeFlagsTypeId = $this->settingsGetNodeFlagTypeId($settings);
+
+            if ($nodeFlagsTypeId === false)
+            {
+                $this->errorLog->errorLog('addNodeFlag: no given nodeFlagsType.');
+                return false;
+            }
+
+            $nodeId = $this->getNodeId($settings);
+
+            if ($nodeId === false)
+            {
+                $this->errorLog->errorLog('addNodeFlag: no given Node.');
+                return false;
+            }
+
+            $data = [
+                'node_id' => $nodeId,
+                'node_flag_type_id' => $nodeFlagsTypeId,
+                'flag_data' => $flagData
+            ];
+            $insertId = $this->qb->table('wio_struct_node_flags')->insert($data);
+            return $insertId;
+        }
+        else
+        {
+            $this->errorLog->errorLog('Notice: NodeFlag "'.$flagData.'" [id:'.$nodeFlagId.'] already exists.');
+            return $nodeFlagId;
+        }
+    }
+
+    public function getNodeFlagId($settings, $flagData)
+    {
+        $subQuery = $this->settingsGetNodeFlagTypeSubquery($settings);
+
+        if (is_numeric($subQuery))
+        {
+            $query = $this->qb->table('wio_struct_node_flags')
+                ->select('id')
+                ->where('node_flag_type_id', $subQuery)
+                ->where('flag_data', $flagData);
+        }
+        elseif ($subQuery !== false)
+        {
+            $query = $this->qb->table('wio_struct_node_flags')
+                ->select('id')
+                ->where($this->qb->raw('node_flag_type_id = ' . $this->qb->subQuery($subQuery)))
+                ->where('flag_data',$flagData);
+        }
+        else
+        {
+            $this->errorLog->errorLog('getNodeFlagId: No "nodeFlagsTypeId" or "nodeFlagsTypeName" found in $settings.');
+            return false;
+        }
+
+        $subQuery2 = false;
+        if (!empty($settings))
+        {
+            $subQuery2 = $this->settingsGetNodeSubquery($settings);
+        }
+
+        if (is_numeric($subQuery2))
+        {
+            $query->where('node_id', $subQuery2);
+        }
+        elseif ($subQuery2 !== false)
+        {
+            $query->where($this->qb->raw('node_id = ' . $this->qb->subQuery($subQuery2)));
+        }
+        else
+        {
+            $this->errorLog->errorLog('getNodeFlagId: No "nodeId" or "nodeName" found in $settings.');
+            return false;
+        }
+
+
+        $row = $query->first();
+
+        if ($row != null)
+        {
+            return $row->id;
+        }
+        else
+        {
+            $this->errorLog->errorLog('getNodeFlagId: NodeFlag "'.$flagData.'" not found.');
+            return false;
+        }
+    }
+
+    public function getNodeFlags($settings = [])
+    {
+        $subQuery = false;
+        if (!empty($settings))
+        {
+            $subQuery = $this->settingsGetNodeFlagTypeSubquery($settings);
+        }
+
+        if (is_numeric($subQuery))
+        {
+            $query = $this->qb->table('wio_struct_node_flags')
+                ->where('node_flag_type_id', $subQuery);
+        }
+        elseif ($subQuery !== false)
+        {
+            $query = $this->qb->table('wio_struct_node_flags')
+                ->where($this->qb->raw('node_flag_type_id = ' . $this->qb->subQuery($subQuery)));
+        }
+        else
+        {
+            $query = $this->qb->table('wio_struct_node_flags');
+        }
+
+        $subQuery2 = false;
+        if (!empty($settings))
+        {
+            $subQuery2 = $this->settingsGetNodeSubquery($settings);
+        }
+
+        if (is_numeric($subQuery2))
+        {
+            $query->where('node_id', $subQuery2);
+        }
+        elseif ($subQuery2 !== false)
+        {
+            $query->where($this->qb->raw('node_id = ' . $this->qb->subQuery($subQuery2)));
+        }
+
+        return $query->get();
+    }
 
 
 /* Notes:

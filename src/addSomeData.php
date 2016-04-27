@@ -166,9 +166,23 @@ echo '</table>';
 
 
 
-$wioStruct->addNodeFlagsType('Wyświetl na mapie liderów');
-$wioStruct->addNodeFlagsType('Ma lidera w edycji 2016');
+$flagWysw1 = $wioStruct->addNodeFlagsType('Wyświetl na mapie liderów');
+$flagE16 = $wioStruct->addNodeFlagsType('Ma lidera w edycji 2016');
 $wioStruct->addNodeFlagsType('Wyświetl na mapie wolontariuszy');
 
+// var_dump($wioStruct->getNodeFlagsTypes());
 
-var_dump($wioStruct->getNodeFlagsTypes());
+$flagWysw2 = $wioStruct->getNodeFlagsTypeId("Wyświetl na mapie wolontariuszy");
+
+$wioStruct->addNodeFlag(['nodeName'=>'Kolegium A','nodeTypeId'=>$kolegiaId,'nodeFlagsTypeId'=>$flagE16],'Włodzimierz A.');
+$wioStruct->addNodeFlag(['nodeName'=>'Kolegium B','nodeTypeId'=>$kolegiaId,'nodeFlagsTypeId'=>$flagE16],'Karolina B.');
+$wioStruct->addNodeFlag(['nodeName'=>'Kolegium C','nodeTypeId'=>$kolegiaId,'nodeFlagsTypeId'=>$flagE16],'Irmina C.');
+
+$wioStruct->addNodeFlag(['nodeName'=>'Kolegium A','nodeTypeId'=>$kolegiaId,'nodeFlagsTypeId'=>$flagWysw1],'');
+$wioStruct->addNodeFlag(['nodeName'=>'Kolegium B','nodeTypeId'=>$kolegiaId,'nodeFlagsTypeId'=>$flagWysw1],'');
+$wioStruct->addNodeFlag(['nodeName'=>'Kolegium C','nodeTypeId'=>$kolegiaId,'nodeFlagsTypeId'=>$flagWysw1],'');
+
+$wioStruct->addNodeFlag(['nodeName'=>'Małopolska','nodeTypeId'=>$radyId,'nodeFlagsTypeId'=>$flagWysw1],'');
+
+
+var_dump($wioStruct->getNodeFlags());
