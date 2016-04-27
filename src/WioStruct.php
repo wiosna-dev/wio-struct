@@ -12,12 +12,11 @@ class WioStruct
     function __construct(\Pixie\QueryBuilder\QueryBuilderHandler $qb)
     {
         $this->qb = $qb;
-
         $this->errorLog = new ErrorLog();
     }
 
     /*
-    * Network table
+    * Networks table
     */
 
     public function getNetworks()
@@ -28,7 +27,9 @@ class WioStruct
 
     public function addNetwork($name)
     {
+        $this->errorLog->off();
         $networkId = $this->getNetworkId($name);
+        $this->errorLog->on();
 
         if ($networkId === false)
         {
@@ -99,12 +100,14 @@ class WioStruct
     }
 
     /*
-        NodeType table
+        NodeTypes table
     */
 
     public function addNodeType($settings, $name)
     {
+        $this->errorLog->off();
         $nodeTypeId = $this->getNodeTypeId($settings, $name);
+        $this->errorLog->on();
 
         if ($nodeTypeId === false)
         {
@@ -237,7 +240,9 @@ class WioStruct
     public function addNode($settings, $name, $lat = 0, $lng = 0)
     {
         $settings['nodeName'] = $name;
+        $this->errorLog->off();
         $nodeId = $this->getNodeId($settings);
+        $this->errorLog->on();
 
         if ($nodeId === false)
         {
@@ -255,13 +260,17 @@ class WioStruct
         }
         else
         {
-            $this->errorLog->errorLog('Notice: NodeType "'.$name.'" [id:'.$nodeId.'] already exists.');
+            $this->errorLog->errorLog('Notice: Node "'.$name.'" [id:'.$nodeId.'] already exists.');
             return $nodeId;
         }
     }
 
     public function getNodeId($settings)
     {
+        if (isset($settings['nodeId']))
+        {
+            return $settings['nodeId'];
+        }
         $name = $settings['nodeName'];
         $subQuery = $this->settingsGetNodeTypeSubQuery($settings);
 
@@ -287,7 +296,7 @@ class WioStruct
         }
         else
         {
-            $this->errorLog->errorLog(': Node "'.$name.'" not found.');
+            $this->errorLog->errorLog('getNodeId: Node "'.$name.'" not found.');
             return false;
         }
     }
@@ -335,47 +344,13 @@ class WioStruct
         $this->qb->table('wio_struct_nodes')->where('id',$nodeId)->update($data);
     }
 
-/*
-    private function settingsGetNodeSubQuery($settings)
-    {
-        if (isset($settings['nodeTypeId']))
-        {
-            return $settings['nodeTypeId'];
-        }
-        elseif (isset($settings['nodeTypeName']))
-        {
-            $subQuery = $this->settingsGetNetworkSubQuery($settings);
-
-            if (is_numeric($subQuery))
-            {
-                return $this->qb->table('wio_struct_node_types')
-                    ->select('id')
-                    ->where('network_id',$subQuery)
-                    ->where('name',$settings['nodeTypeName']);
-            }
-            else
-            {
-                return $this->qb->table('wio_struct_node_types')
-                    ->select('id')
-                    ->where($this->qb->raw('network_id = ' . $this->qb->subQuery($subQuery)))
-                    ->where('name',$settings['nodeTypeName']);
-            }
-        }
-        else
-        {
-            $this->errorLog->errorLog('No "nodeTypeId" or "nodeTypeName" in $settings');
-            return false;
-        }
-    }
-*/
-
     public function getLoseNodes($settings = []){}
     public function getClosestNode($lat, $lng, $settings = []){}
 
 
 
     /*
-      Links array
+      Links table
     */
     public function getLinkId($parentId,$childrenId)
     {
@@ -387,10 +362,12 @@ class WioStruct
         return $query->first();
     }
 
-    public function setLink($parentSettings,$childrenSettings)
+    public function addLink($parentSettings,$childrenSettings)
     {
+        $this->errorLog->off();
         $parentId = $this->getNodeId($parentSettings);
         $childrenId = $this->getNodeId($childrenSettings);
+        $this->errorLog->on();
 
         $linkId = $this->getLinkId($parentId,$childrenId);
 
@@ -410,6 +387,11 @@ class WioStruct
             $this->errorLog->errorLog('Notice: setLink() [id:'.$linkId->id.'] is already set.');
             return $linkId->id;
         }
+    }
+
+    public function showAllLinks($settings)
+    {
+
     }
 
     public function getNodeLinks(){}

@@ -4,15 +4,21 @@ namespace WioStruct\ErrorLog;
 
 class ErrorLog extends AbstractErrorLog
 {
+    private $isRunning;
     private $messages;
 
-    function _construct()
+    function __construct()
     {
+        $this->isRunning = true;
         $this->messages = [];
     }
 
-    function errorLog($message)
+    public function errorLog($message)
     {
+        if(!$this->isRunning)
+        {
+            return true;
+        }
         $this->messages[] = $message;
     }
 
@@ -21,7 +27,7 @@ class ErrorLog extends AbstractErrorLog
         $this->showLog();
     }
 
-    function showLog()
+    public function showLog()
     {
         if (count($this->messages))
         {
@@ -32,5 +38,16 @@ class ErrorLog extends AbstractErrorLog
             }
         }
     }
+
+    public function on()
+    {
+        $this->isRunning = true;
+    }
+
+    public function off()
+    {
+        $this->isRunning = false;
+    }
+
 
 }

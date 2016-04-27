@@ -88,15 +88,74 @@ $wioStruct->addNode(['nodeTypeId'=>$regionyId], 'Tarnów Północ');
 // var_dump($wioStruct->getNodeById($kolegiumY));
 
 
-$linkId = $wioStruct->setLink(
+$linkId = $wioStruct->addLink(
     ['nodeName'=>'Małopolska','nodeTypeName'=>'Rada Wojewódzka','networkName'=>'Akademia Przyszłości'],
     ['nodeName'=>'Kolegium A','nodeTypeName'=>'Kolegium','networkName'=>'Akademia Przyszłości']
 );
-$linkId = $wioStruct->setLink(
+$linkId = $wioStruct->addLink(
     ['nodeName'=>'Małopolska','nodeTypeName'=>'Rada Wojewódzka','networkName'=>'Akademia Przyszłości'],
     ['nodeName'=>'Kolegium B','nodeTypeName'=>'Kolegium','networkName'=>'Akademia Przyszłości']
 );
-$linkId = $wioStruct->setLink(
+$linkId = $wioStruct->addLink(
     ['nodeName'=>'Małopolska','nodeTypeId'=>$radyId],
     ['nodeName'=>'Kolegium C','nodeTypeId'=>$kolegiaId]
 );
+
+$krajeId  = $wioStruct->getNodeTypeId(['networkId'=>$admId],'Kraj');
+$wojewId  = $wioStruct->getNodeTypeId(['networkId'=>$admId],'Województwo');
+$miastaId = $wioStruct->getNodeTypeId(['networkId'=>$admId],'Miasto');
+$szkolyId = $wioStruct->getNodeTypeId(['networkId'=>$admId],'Szkoła');
+
+$kraj1 = $wioStruct->addNode(['nodeTypeId'=>$krajeId],'Polska');
+$kraj2 = $wioStruct->addNode(['nodeTypeId'=>$krajeId],'Czechy');
+
+
+$woj1 = $wioStruct->addNode(['nodeTypeId'=>$wojewId],'Małopolska');
+$wioStruct->addLink(['nodeId'=>$kraj1],['nodeId'=>$woj1]);
+
+$woj2 = $wioStruct->addNode(['nodeTypeId'=>$wojewId],'Kujawsko-Pomorskie');
+$wioStruct->addLink(['nodeId'=>$kraj1],['nodeId'=>$woj2]);
+
+$woj3 = $wioStruct->addNode(['nodeTypeId'=>$wojewId],'Morawy');
+$wioStruct->addLink(['nodeId'=>$kraj2],['nodeId'=>$woj3]);
+
+$woj4 = $wioStruct->addNode(['nodeTypeId'=>$wojewId],'Pardubice');
+$wioStruct->addLink(['nodeId'=>$kraj2],['nodeId'=>$woj4]);
+
+
+$miasto1 = $wioStruct->addNode(['nodeTypeId'=>$miastaId],'Kraków');
+$wioStruct->addLink(['nodeId'=>$woj1],['nodeId'=>$miasto1]);
+
+$miasto2 = $wioStruct->addNode(['nodeTypeId'=>$miastaId],'Tarnów');
+$wioStruct->addLink(['nodeId'=>$woj1],['nodeId'=>$miasto2]);
+
+$miasto3 = $wioStruct->addNode(['nodeTypeId'=>$miastaId],'Brzesko');
+$wioStruct->addLink(['nodeId'=>$woj1],['nodeId'=>$miasto3]);
+
+$miasto4 = $wioStruct->addNode(['nodeTypeId'=>$miastaId],'Bydgoszcz');
+$wioStruct->addLink(['nodeId'=>$woj2],['nodeId'=>$miasto4]);
+
+$miasto5 = $wioStruct->addNode(['nodeTypeId'=>$miastaId],'Toruń');
+$wioStruct->addLink(['nodeId'=>$woj2],['nodeId'=>$miasto5]);
+
+$miasto6 = $wioStruct->addNode(['nodeTypeId'=>$miastaId],'Bohumin');
+$wioStruct->addLink(['nodeId'=>$woj3],['nodeId'=>$miasto6]);
+
+$miasto7 = $wioStruct->addNode(['nodeTypeId'=>$miastaId],'Ostrava');
+$wioStruct->addLink(['nodeId'=>$woj3],['nodeId'=>$miasto7]);
+
+$miasto8 = $wioStruct->addNode(['nodeTypeId'=>$miastaId],'Pardubice');
+$wioStruct->addLink(['nodeId'=>$woj4],['nodeId'=>$miasto8]);
+
+
+$szkola1 = $wioStruct->addNode(['nodeTypeId'=>$szkolyId],'Szkoła A');
+$wioStruct->addLink(['nodeId'=>$miasto1],['nodeId'=>$szkola1]);
+
+$szkola2 = $wioStruct->addNode(['nodeTypeId'=>$szkolyId],'Szkoła B');
+$wioStruct->addLink(['nodeId'=>$miasto1],['nodeId'=>$szkola2]);
+
+$szkola3 = $wioStruct->addNode(['nodeTypeId'=>$szkolyId],'Szkoła C');
+$wioStruct->addLink(['nodeId'=>$miasto1],['nodeId'=>$szkola3]);
+
+$szkola4 = $wioStruct->addNode(['nodeTypeId'=>$szkolyId],'Czeska szkoła jedzenia sera');
+$wioStruct->addLink(['nodeId'=>$miasto6],['nodeId'=>$szkola4]);
