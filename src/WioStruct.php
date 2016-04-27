@@ -236,7 +236,8 @@ class WioStruct
 
     public function addNode($settings, $name, $lat = 0, $lng = 0)
     {
-        $nodeId = $this->getNodeId($settings, $name);
+        $settings['nodeName'] = $name;
+        $nodeId = $this->getNodeId($settings);
 
         if ($nodeId === false)
         {
@@ -257,12 +258,11 @@ class WioStruct
             $this->errorLog->errorLog('Notice: NodeType "'.$name.'" [id:'.$nodeId.'] already exists.');
             return $nodeId;
         }
-
-
     }
 
-    public function getNodeId($settings, $name)
+    public function getNodeId($settings)
     {
+        $name = $settings['nodeName'];
         $subQuery = $this->settingsGetNodeTypeSubQuery($settings);
 
         if(is_numeric($subQuery))
@@ -287,9 +287,17 @@ class WioStruct
         }
         else
         {
-            $this->errorLog->errorLog('getNodeId: Node "'.$name.'" not found.');
+            $this->errorLog->errorLog(': Node "'.$name.'" not found.');
             return false;
         }
+    }
+
+    public function getNodeById($nodeId)
+    {
+        $query = $this->qb->table('wio_struct_nodes')
+            ->select('id')
+            ->where('id',$nodeId);
+        return $query->first();
     }
 
     public function getNodes($settings = [])
@@ -314,10 +322,102 @@ class WioStruct
         return $query->get();
     }
 
+    public function changeNodeData($settings, $data)
+    {
+        if (isset($settings['nodeId']))
+        {
+            $nodeId = $settings['nodeId'];
+        }
+        else
+        {
+            $nodeId = $this->getNodeId($settings);
+        }
+        $this->qb->table('wio_struct_nodes')->where('id',$nodeId)->update($data);
+    }
 
+/*
+    private function settingsGetNodeSubQuery($settings)
+    {
+        if (isset($settings['nodeTypeId']))
+        {
+            return $settings['nodeTypeId'];
+        }
+        elseif (isset($settings['nodeTypeName']))
+        {
+            $subQuery = $this->settingsGetNetworkSubQuery($settings);
+
+            if (is_numeric($subQuery))
+            {
+                return $this->qb->table('wio_struct_node_types')
+                    ->select('id')
+                    ->where('network_id',$subQuery)
+                    ->where('name',$settings['nodeTypeName']);
+            }
+            else
+            {
+                return $this->qb->table('wio_struct_node_types')
+                    ->select('id')
+                    ->where($this->qb->raw('network_id = ' . $this->qb->subQuery($subQuery)))
+                    ->where('name',$settings['nodeTypeName']);
+            }
+        }
+        else
+        {
+            $this->errorLog->errorLog('No "nodeTypeId" or "nodeTypeName" in $settings');
+            return false;
+        }
+    }
+*/
+
+    public function getLoseNodes($settings = []){}
     public function getClosestNode($lat, $lng, $settings = []){}
 
 
-    # getLoseNodes
 
+    /*
+      Links array
+    */
+    public function getLinkId($parentId,$childrenId)
+    {
+        $query = $this->qb->table('wio_struct_links')
+            ->select('id')
+            ->where('node_parent_id',$parentId)
+            ->where('node_children_id',$childrenId);
+
+        return $query->first();
+    }
+
+    public function setLink($parentSettings,$childrenSettings)
+    {
+        $parentId = $this->getNodeId($parentSettings);
+        $childrenId = $this->getNodeId($childrenSettings);
+
+        $linkId = $this->getLinkId($parentId,$childrenId);
+
+        if ($linkId === null)
+        {
+            $data = [
+                'node_parent_id' => $parentId,
+                'node_children_id' => $childrenId,
+                'link_type' => 0,
+                'auto_generated' => 0,
+            ];
+            $insertedId = $this->qb->table('wio_struct_links')->insert($data);
+            return $insertedId;
+        }
+        else
+        {
+            $this->errorLog->errorLog('Notice: setLink() [id:'.$linkId->id.'] is already set.');
+            return $linkId->id;
+        }
+    }
+
+    public function getNodeLinks(){}
+
+
+/* Notes:
+- do we want IDs from Links outside?
+- we don't want error messages of searching the IDs from adding functions
+
+*/
 }

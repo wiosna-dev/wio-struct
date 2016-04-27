@@ -1,6 +1,4 @@
 <?php
-
-
 #creating PIXIE for tests
 $config = array(
             'driver'    => 'mysql',
