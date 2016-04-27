@@ -162,3 +162,13 @@ $wioStruct->addLink(['nodeId'=>$miasto6],['nodeId'=>$szkola4]);
 echo '<table>';
 echo $wioStruct->showLinksWithNodes();
 echo '</table>';
+
+
+
+
+$wioStruct->addNodeFlagsType('Wyświetl na mapie liderów');
+$wioStruct->addNodeFlagsType('Ma lidera w edycji 2016');
+$wioStruct->addNodeFlagsType('Wyświetl na mapie wolontariuszy');
+
+
+var_dump($wioStruct->getNodeFlagsTypes());
