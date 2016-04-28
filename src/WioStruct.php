@@ -2,11 +2,11 @@
 namespace WioStruct;
 
 use \WioStruct\ErrorLog\ErrorLog;
+use \WioStruct\Core\StructQuery;
 class WioStruct
 {
 
     public $qb;
-
     public $errorLog;
 
     function __construct(\Pixie\QueryBuilder\QueryBuilderHandler $qb)
@@ -15,6 +15,19 @@ class WioStruct
         $this->errorLog = new ErrorLog();
     }
 
+
+    public function structQuery(\WioStruct\Core\StructDefinition $structDefinition)
+    {
+        return new StructQuery($structDefinition, $this->errorLog, $this->qb);
+    }
+
+}
+
+
+
+
+class bunch_of_deprecated_methods
+{
     /*
         Networks table
     */
