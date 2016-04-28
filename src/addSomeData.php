@@ -11,7 +11,7 @@ echo '<!doctype HTML><html><bead><meta charset="utf-8">';
 $szpId = $wioStruct->addNetwork('Szlachetna paczka');
 $apId = $wioStruct->addNetwork('Akademia Przyszłości');
 
-$wioStruct->getNetworkId('Szlachetna paczka');
+$szpId = $wioStruct->getNetworkId('Szlachetna paczka');
 
 $wioStruct->getNetworkAdministrativeId();
 
@@ -185,4 +185,24 @@ $wioStruct->addNodeFlag(['nodeName'=>'Kolegium C','nodeTypeId'=>$kolegiaId,'node
 $wioStruct->addNodeFlag(['nodeName'=>'Małopolska','nodeTypeId'=>$radyId,'nodeFlagsTypeId'=>$flagWysw1],'');
 
 
-var_dump($wioStruct->getNodeFlags());
+tab_dump($wioStruct->getNodeFlags());
+
+
+function tab_dump($array)
+{
+    $html = '';
+
+    foreach ($array as $T)
+    {
+        $head = '';
+        $html.='<tr>';
+        foreach ($T as $e=>$f)
+        {
+            $html .='<td>'.$f.'</td>';
+            $head .='<th>'.$e.'</th>';
+        }
+        $html.='</tr>';
+    }
+    echo '<style>table td{text-align: center; }</style>';
+    echo '<table><tr>'.$head.'</tr>'.$html.'</table>';
+}
