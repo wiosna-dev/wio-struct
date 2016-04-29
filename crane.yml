@@ -52,4 +52,4 @@ containers:
             detach: true
 
 groups:
-    default: ["web", "mysql", "mailcatcher"]
+    default: ["web", "mysql"]

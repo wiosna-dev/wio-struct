@@ -7,6 +7,9 @@ class StructQuery
     use NodeTypeTrait;
     use NodeTrait;
     use LinkTrait;
+    use NodeFlagTrait;
+    use NodeFlagTypeTrait;
+
 
     private $structDefinition;
     private $errorLog;
