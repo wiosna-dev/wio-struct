@@ -8,13 +8,55 @@ require_once('exampleEnvironment.php');
 echo '<!doctype HTML><html><head><meta charset="utf-8"></head><body>';
 
 
+$wioStruct->structQuery(new StructDefinition)
+    ->addNetwork('Szlachetna Paczka')
+    ->addNetwork('Akademia Przyszłości');
+
+
+$administrativeDef = (new StructDefinition)
+    ->networkName('administrative');
+
+$wioStruct->structQuery($administrativeDef)
+    ->addNodeType('Country')
+    ->addNodeType('State')
+    ->addNodeType('City')
+    ->addNodeType('School');
+
+$szpNetworkId = $wioStruct->structQuery((new StructDefinition)->networkName('Szlachetna Paczka'))
+    ->firstNetwork('id');
+
+$wioStruct->structQuery((new StructDefinition)->networkId($szpNetworkId))
+    ->addNodeType('województwo')
+    ->addNodeType('region')
+    ->addNodeType('rejon');
+
+$wioStruct->structQuery((new StructDefinition)->networkName('Akademia Przyszłości'))
+    ->addNodeType('województwo')
+    ->addNodeType('region')
+    ->addNodeType('kolegium');
+
+
+$networks = $wioStruct->structQuery((new StructDefinition))
+    ->getNetworks();
+
+tab_dump($networks);
+
+
+
+$nodeTypes = $wioStruct->structQuery((new StructDefinition))
+    ->getNodeTypes();
+
+tab_dump($nodeTypes);
+
+
+die('<br/><br/> --Script End');
+
 // pobranie rejonów do mapy
 $areasToShowOnMapDef = (new StructDefinition)
   ->networkName('Szlachetna Paczka')
   ->nodeTypeName('rejon');
 
 
-$wioStruct->structQuery(new StructDefinition)->addNetwork('Akademia Przyszłości');
 
 $areasArray = $wioStruct->structQuery($areasToShowOnMapDef)->get();
 
