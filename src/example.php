@@ -108,8 +108,9 @@ $stateAdder->addNode('Kujawsko-Pomorskie')
     ->linkParent($polandDef)
     ->addNodeFlag('leaders_recrutation_map');
 
-
-
+#
+# Adding City Nodes
+#
 
 $malopolskaId = $wioStruct->structQuery(
         (new StructDefinition)
@@ -146,14 +147,14 @@ $cityAdder->addNode('Kraków')
     ->addNodeFlag('leaders_recrutation_map');
 
 $cityAdder->addNode('Zakopane')
-    ->linkParent($malopolskaId)
+    ->linkParent($malopolskaId);
 
 $cityAdder->addNode('Tarnów')
     ->linkParent($malopolskaId)
     ->addNodeFlag('leaders_recrutation_map');
 
 $cityAdder->addNode('Bochnia')
-    ->linkParent($malopolskaId)
+    ->linkParent($malopolskaId);
 
 $cityAdder->addNode('Brzesko')
     ->linkParent($malopolskaId)
@@ -191,6 +192,9 @@ $cityAdder->addNode('Golub-Dobrzyń')
     ->linkParent($kujPomId)
     ->addNodeFlag('leaders_recrutation_map');
 
+#
+# Adding School Nodes
+#
 
 $schoolAdder = $wioStruct->structQuery(
     (new StructDefinition)
@@ -198,7 +202,7 @@ $schoolAdder = $wioStruct->structQuery(
         ->nodeTypeName('School')
     );
 
-$shoolAdder->addNode('SP nr 4')
+$schoolAdder->addNode('SP nr 4')
     ->linkParent(
         (new StructDefinition)
             ->networkName('administrative')
@@ -215,7 +219,7 @@ $cityTypeId = $wioStruct->structQuery(
     )
     ->first('id');
 
-$shoolAdder->addNode('SP nr 7')
+$schoolAdder->addNode('SP nr 7')
     ->linkParent(
         (new StructDefinition)
             ->nodeTypeId($cityTypeId)
@@ -223,7 +227,7 @@ $shoolAdder->addNode('SP nr 7')
     )
     ->addNodeFlag('leaders_recrutation_map');
 
-$shoolAdder->addNode('SP nr 11')
+$schoolAdder->addNode('SP nr 11')
     ->linkParent(
         (new StructDefinition)
           ->nodeTypeId($cityTypeId)
@@ -231,7 +235,7 @@ $shoolAdder->addNode('SP nr 11')
     );
 
 
-$shoolAdder->addNode('SP nr 2')
+$schoolAdder->addNode('SP nr 2')
     ->linkParent(
         (new StructDefinition)
             ->nodeTypeId($cityTypeId)
@@ -239,7 +243,7 @@ $shoolAdder->addNode('SP nr 2')
     )
     ->addNodeFlag('leaders_recrutation_map');
 
-$shoolAdder->addNode('SP nr 5')
+$schoolAdder->addNode('SP nr 5')
     ->linkParent(
         (new StructDefinition)
             ->nodeTypeId($cityTypeId)
@@ -250,11 +254,16 @@ $shoolAdder->addNode('SP nr 5')
 
 
 
+$schoolDef = (new StructDefinition)
+    ->networkName('administrative')
+    ->nodeTypeName('school')
+    ->nodeFlagType('leaders_recrutation_map');
 
 
+$szkoly = $wioStruct->structQuery($schoolDef)
+    ->get();
 
-
-
+tab_dump($szkoly);
 
 
 
