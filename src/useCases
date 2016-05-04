@@ -1,0 +1,57 @@
+Networks
+- add - simple
+
+- first - require:
+    - networkId                                 getNetworkId  Network
+    - netowrkName
+
+NodeTypes
+- add - require:
+    - networkId                                 getNetworkId  NodeType
+    - networkName
+
+- first - require:
+    - nodeTypeId                                getNodeTypeId NodeType
+    - nodeTypeName, networkId
+    - nodeTyoeName, networkName
+
+Nodes
+- add - require:
+    - nodeTypeId                                getNodeTypeId Node
+    - nodeTypeName, networkId
+    - nodeTypeName, networkName
+
+- first - require:
+    - nodeId                                    getNodeId Node
+    - nodeName, nodeTypeId
+    - nodeName, nodeTypeName, networkId
+    - nodeName, nodeTypeName, networkName
+
+Links
+- add - require:
+    - nodeId                                    getNodeId Link
+    - nodeName, nodeTypeId
+    - nodeName, nodeTypeName, networkId
+    - nodeName, nodeTypeName, networkName
+  AND:
+    - nodeId                                    getNodeId Link
+    - nodeName, nodeTypeId
+    - nodeName, nodeTypeName, networkId
+    - nodeName, nodeTypeName, networkName
+
+NodeFlagTypes
+- add - simple
+
+- first - require:
+    - nodeFlagTypeName                          getNodeFlagTypeId NodeFlagType
+    - nodeFlagTypeId
+
+NodeFlags
+- add - require:
+    - nodeFlagTypeName                          getNodeFlagTypeId NodeFlag
+    - nodeFlagTypeId
+  AND:
+    - nodeId                                    getNodeId NodeFlag
+    - nodeName, nodeTypeId
+    - nodeName, nodeTypeName, networkId
+    - nodeName, nodeTypeName, networkName
