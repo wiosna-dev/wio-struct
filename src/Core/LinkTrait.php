@@ -4,13 +4,22 @@ namespace WioStruct\Core;
 trait LinkTrait
 {
 
-    function addParent(StructDefinition $structDefinition)
+    function linkParent($structDefinition)
     {
+        $secondNodeId = false;
+        if (is_a($structDefinition, 'StructDefinition'))
+        {
+
+        }
+        else
+        {
+            $secondNodeId = $structDefinition;
+        }
 
         return $this;
     }
 
-    function addChildren(StructDefinition $structDefinition)
+    function linkChildren(StructDefinition $structDefinition)
     {
 
         return $this;

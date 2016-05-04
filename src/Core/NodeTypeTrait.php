@@ -139,16 +139,36 @@ trait NodeTypeTrait
 
         $answer = $query->first();
 
-        if($selects !== false and isset($answer->$selects))
+        if ($selects !== false and isset($answer->$selects))
         {
             return $answer->$selects;
         }
-        if($answer === null)
+        if ($answer === null)
         {
             return false;
         }
 
         return $answer;
+    }
+
+    private function subQueryAddNodeType2node(&$query)
+    {
+        if($this->structDefinition->nodeTypeId !== false)
+        {
+            $query->where('node_type_id', $this->structDefinition->nodeTypeId);
+        }
+
+        if($this->structDefinition->nodeTypeName !== false)
+        {
+            $this->subQueryAddNetwork2nodeType();
+          $subQuery = $this->qb->table('wio_struct_node_types')
+              ->select('id')
+              ->where('name', $this->structDefinition->nodeTypeName);
+          $query->where($this->qb->raw('node_type_id = '.$this->qb->subQuery($subQuery)));
+
+
+        }
+
     }
 
 }

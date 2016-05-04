@@ -15,7 +15,7 @@ class ErrorLog extends AbstractErrorLog
 
     public function errorLog($message)
     {
-        if(!$this->isRunning)
+        if (!$this->isRunning)
         {
             return true;
         }

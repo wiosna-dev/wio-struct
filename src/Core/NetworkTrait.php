@@ -30,13 +30,17 @@ trait NetworkTrait
     {
         $query = $this->qb->table('wio_struct_networks');
 
-        if($this->structDefinition->networkId !== false)
+        if ($this->structDefinition->networkId !== false)
+        {
             $query->where('id', $this->structDefinition->networkId);
+        }
 
-        if($this->structDefinition->networkName !== false)
+        if ($this->structDefinition->networkName !== false)
+        {
             $query->where('name', $this->structDefinition->networkName);
+        }
 
-        if( $selects == false)
+        if ($selects == false)
         {
             $query->select('*');
         }
@@ -63,7 +67,7 @@ trait NetworkTrait
             $query->where('name', $this->structDefinition->networkName);
         }
 
-        if ( $selects == false)
+        if ($selects == false)
         {
             $query->select('*');
         }
@@ -74,11 +78,11 @@ trait NetworkTrait
 
         $answer = $query->first();
 
-        if($selects !== false and isset($answer->$selects))
+        if ($selects !== false and isset($answer->$selects))
         {
             return $answer->$selects;
         }
-        if($answer === null)
+        if ($answer === null)
         {
             return false;
         }

@@ -39,8 +39,8 @@ $queries[] = "CREATE TABLE `wio_struct_links` (
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;";
 
-$queries[] = "DROP TABLE IF EXISTS `wio_struct_node_flags_types`";
-$queries[] = "CREATE TABLE `wio_struct_node_flags_types` (
+$queries[] = "DROP TABLE IF EXISTS `wio_struct_node_flag_types`";
+$queries[] = "CREATE TABLE `wio_struct_node_flag_types` (
     `id` INT(11) NOT NULL AUTO_INCREMENT ,
     `name` VARCHAR(64) NOT NULL ,
     PRIMARY KEY (`id`)

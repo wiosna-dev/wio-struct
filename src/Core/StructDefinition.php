@@ -22,8 +22,8 @@ class StructDefinition
         $this->nodeTypeId = false;
         $this->nodeName = false;
         $this->nodeId = false;
-        $this->flagName = false;
-        $this->flagId = false;
+        $this->nodeFlagTypeName = false;
+        $this->nodeFlagTypeId = false;
         $this->linkParent = false;
         $this->linkChildren = false;
     }
@@ -67,15 +67,15 @@ class StructDefinition
     }
 
 
-    public function flagName($name)
+    public function nodeFlagTypeName($name)
     {
-        $this->flagName = $name;
+        $this->nodeFlagTypeName = $name;
         return $this;
     }
 
-    public function flagId($id)
+    public function nodeFlagTypeId($id)
     {
-        $this->flagId = $id;
+        $this->nodeFlagTypeId = $id;
         return $this;
     }
 
@@ -91,6 +91,5 @@ class StructDefinition
         $this->linkChildren = $nodeDef;
         return $this;
     }
-
 
 }

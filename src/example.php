@@ -18,7 +18,7 @@ $wioStruct->structQuery(new StructDefinition)
 $networks = $wioStruct->structQuery((new StructDefinition))
     ->getNetworks();
 
-tab_dump($networks);
+// tab_dump($networks);
 
 #
 # Setting NODE TYPES
@@ -50,16 +50,16 @@ $wioStruct->structQuery(
     ->addNodeType('region')
     ->addNodeType('kolegium');
 
-$nodeTypes = $wioStruct->structQuery((new StructDefinition))
+$nodeTypes = $wioStruct->structQuery(new StructDefinition)
     ->getNodeTypes();
 
-tab_dump($nodeTypes);
+// tab_dump($nodeTypes);
 
 #
 # Setting NODE FLAG TYPES
 #
 
-$wioStruct->structQuery((new StructDefinition))
+$wioStruct->structQuery(new StructDefinition)
     ->addNodeFlagType('leaders_recrutation_map')
     ->addNodeFlagType('leader_recruited')
     ->addNodeFlagType('main_recrutation_map');
@@ -67,7 +67,7 @@ $wioStruct->structQuery((new StructDefinition))
 $flagTypes = $wioStruct->structQuery((new StructDefinition))
     ->getNodeFlagTypes();
 
-tab_dump($flagTypes);
+// tab_dump($flagTypes);
 
 
 #
@@ -215,7 +215,7 @@ $schoolAdder->addNode('SP nr 4')
 $cityTypeId = $wioStruct->structQuery(
         (new StructDefinition)
             ->networkName('administrative')
-            ->networkTypeName('city')
+            ->networkName('city')
     )
     ->first('id');
 
@@ -257,22 +257,19 @@ $schoolAdder->addNode('SP nr 5')
 $schoolDef = (new StructDefinition)
     ->networkName('administrative')
     ->nodeTypeName('school')
-    ->nodeFlagType('leaders_recrutation_map');
+    ->nodeFlagTypeName('leaders_recrutation_map');
 
 
 $szkoly = $wioStruct->structQuery($schoolDef)
     ->get();
 
-tab_dump($szkoly);
+//tab_dump($szkoly);
 
 
 
 
 
-
-
-
-
+dump_database($qb);
 
 
 

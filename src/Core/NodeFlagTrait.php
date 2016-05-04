@@ -6,5 +6,14 @@ trait NodeFlagTrait
 
 
 
-  
+
+    function addNodeFlag($nodeFlagTypeName, $flagData = '')
+    {
+
+
+
+        return $this;
+    }
+
+
 }
