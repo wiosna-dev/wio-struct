@@ -5,6 +5,7 @@ class StructQuery
 {
     use ProccessingArraysTrait;
     use PrepareQueryTrait;
+    use IdRetriverTrait;
 
     private $structDefinition;
     private $errorLog;
@@ -126,7 +127,7 @@ class StructQuery
     public function getId($mainTableName)
     {
 
-        
+
     }
 
     public function first($mainTableName, $selects = false)
