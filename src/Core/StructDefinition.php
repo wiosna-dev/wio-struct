@@ -51,6 +51,17 @@ class StructDefinition
         ]
     ];
 
+    private $columns = [
+        'networkId'    => 'wio_struct_networks.id',
+        'netowrkName'  => 'wio_struct_networks.name',
+        'nodeTypeId'   => 'wio_struct_node_types.id',
+        'nodeTypeName' => 'wio_struct_node_types.name',
+        'nodeId'       => 'wio_struct_node.id',
+        'nodeName'     => 'wio_struct_node.name',
+        'flagTypeId'   => 'wio_struct_flag_types.id',
+        'flagTypeName' => 'wio_struct_flag_types.name',
+    ]
+
     public function set($tableName, $valueName, $value)
     {
         if (!isset($this->values[ $tableName ][ $valueName ]))

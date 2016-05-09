@@ -123,6 +123,11 @@ class StructQuery
         return $this->query->get();
     }
 
+    public function getId($mainTableName)
+    {
+
+        
+    }
 
     public function first($mainTableName, $selects = false)
     {
