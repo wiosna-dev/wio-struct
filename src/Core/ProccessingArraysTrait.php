@@ -102,7 +102,21 @@ trait ProccessingArraysTrait
             'Network' => [
                 'Network' => ['network_id','id']
             ]
-        ]
+        ],
+        'LinkParent' => [
+            'Node' => [
+                'Node' => ['node_parent_id','id']
+            ],
+            'NodeType' => [
+                'Node' => ['node_parent_id','id'],
+                'NodeType' => ['node_type_id','id']
+            ],
+            'Network' => [
+                'Node' => ['node_parent_id','id'],
+                'NodeType' => ['node_type_id','id'],
+                'Network' => ['network_id','id']
+            ]
+        ],
     ];
 
 }

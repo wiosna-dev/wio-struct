@@ -46,6 +46,7 @@ class StructQuery
         $tableId = $this->newQuery($structDefinition)
             ->first($mainTableName,'id');
 
+
         if ($tableId === false)
         {
             $values = $this->prepareValues($value0,$value1,$value2);
@@ -53,9 +54,12 @@ class StructQuery
             {
                 $this->setQueryTable();
 
-                $this->printQuery();
-                var_dump($values);
-                $this->query->insert($values);
+                $idInserted = $this->query->insert($values);
+
+                if ($mainTableName == 'Node')
+                {
+                    $this->structDefinition->nodeId($idInserted);
+                }
             }
             else
             {
@@ -85,8 +89,6 @@ class StructQuery
                     ->first('Node','id');
             }
 
-
-            echo $i.': '.print_r($$valueName,true).'<br/>';
             if (($$valueName !== false) and isset($tableColumns[$i]))
             {
                 $values[ $tableColumns[$i] ] = $value;
@@ -113,8 +115,11 @@ class StructQuery
         $this->pointAtTable = $mainTableName;
         $this->prepareQuery();
 
-        $this->errorLog->showLog();
-        $this->printQuery();
+        if ($selects !== false)
+        {
+
+        }
+
         return $this->query->get();
     }
 
@@ -128,8 +133,12 @@ class StructQuery
         if (is_string($selects))
         {
             $this->query->select($this->tableNames[ $this->pointAtTable ].'.'.$selects);
+            if ($this->pointAtTable == 'LinkParent')
+            {
+                var_dump($this->structDefinition);
+                $this->printQuery();
 
-            //  $this->printQuery();
+            }
             $answer = $this->query->first();
 
             if ($selects !== false and isset($answer->$selects))

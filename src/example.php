@@ -256,9 +256,6 @@ $schoolAdder->add('Node','SP nr 5')
         )
     ->add('Flag','leaders_recrutation_map');
 
-
-
-
 $schoolDef = (new StructDefinition)
     ->networkName('administrative')
     ->nodeTypeName('school')
@@ -270,21 +267,8 @@ $szkoly = $wioStruct->structQuery($schoolDef)
 
 //tab_dump($szkoly);
 
-
-
-
-
 dump_database($qb);
-
-
-
-
-
-
 die('Allok');
-
-
-
 
 
 

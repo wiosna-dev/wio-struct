@@ -55,3 +55,30 @@ NodeFlags
     - nodeName, nodeTypeId
     - nodeName, nodeTypeName, networkId
     - nodeName, nodeTypeName, networkName
+
+
+add('Network',name)
+    -> check if "name" is in Network
+
+add('FlagType',name)
+    -> check if "name" is in FlagType
+
+add('NodeType',name)
+    -> we need NetworkId, or we can get it with networkName
+    -> we check if "name" is in NodeType with NetworkId
+
+add('Node',name)
+    -> we need NodeTypeId, or we get it from NodeTypeName + NetworkId or NodeTypeName + NetworkName
+    -> we check if "name" is in Node with NodeTypeId
+
+
+add('Flag',flag_data)
+    -> we need InsertedNode
+    -> we need FlagTypeId or we get it from FlagTypeName
+    -> we check if "flag_data" is in Flag with FlagTypeId
+
+add('LinkParent',ID/Struct)
+    -> we need 2 IDs, we need both of them to be checked as proper
+    -> we need InsertedNode
+
+add('LinkChildren',name)
