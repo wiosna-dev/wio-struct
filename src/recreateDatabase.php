@@ -39,18 +39,18 @@ $queries[] = "CREATE TABLE `wio_struct_links` (
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;";
 
-$queries[] = "DROP TABLE IF EXISTS `wio_struct_node_flag_types`";
-$queries[] = "CREATE TABLE `wio_struct_node_flag_types` (
+$queries[] = "DROP TABLE IF EXISTS `wio_struct_flag_types`";
+$queries[] = "CREATE TABLE `wio_struct_flag_types` (
     `id` INT(11) NOT NULL AUTO_INCREMENT ,
     `name` VARCHAR(64) NOT NULL ,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;";
 
-$queries[] = "DROP TABLE IF EXISTS `wio_struct_node_flags`";
-$queries[] = "CREATE TABLE `wio_struct_node_flags` (
+$queries[] = "DROP TABLE IF EXISTS `wio_struct_flags`";
+$queries[] = "CREATE TABLE `wio_struct_flags` (
     `id` INT(11) NOT NULL AUTO_INCREMENT ,
     `node_id` INT (11) NOT NULL ,
-    `node_flag_type_id` INT(11) NOT NULL ,
+    `flag_type_id` INT(11) NOT NULL ,
     `flag_data` VARCHAR(255) NOT NULL ,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;";

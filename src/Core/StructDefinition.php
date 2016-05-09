@@ -9,8 +9,8 @@ class StructDefinition
     public $nodeTypeId;
     public $nodeName;
     public $nodeId;
-    public $flagName;
-    public $flagId;
+    public $flagTypeName;
+    public $flagTypeId;
     public $linkParent;
     public $linkChildren;
 
@@ -22,10 +22,44 @@ class StructDefinition
         $this->nodeTypeId = false;
         $this->nodeName = false;
         $this->nodeId = false;
-        $this->nodeFlagTypeName = false;
-        $this->nodeFlagTypeId = false;
+        $this->flagTypeName = false;
+        $this->flagTypeId = false;
         $this->linkParent = false;
         $this->linkChildren = false;
+    }
+
+    private $values = [
+        'Network' => [
+            'id' => 'networkId',
+            'name' => 'networkName'
+        ],
+        'NodeType' => [
+            'id' => 'nodeTypeId',
+            'name' => 'nodeTypeName'
+        ],
+        'Node' => [
+            'id' => 'nodeId',
+            'name' => 'nodeName'
+        ],
+        'FlagType' => [
+            'id' => 'flagTypeId',
+            'name' => 'flagTypeName'
+        ],
+        'Link' => [
+            'parentId' => 'linkParent',
+            'childrenId' => 'linkChildren'
+        ]
+    ];
+
+    public function set($tableName, $valueName, $value)
+    {
+        if (!isset($this->values[ $tableName ][ $valueName ]))
+        {
+            return false;
+        }
+
+        $key = $this->values[ $tableName ][ $valueName ];
+        $this->$key = $value;
     }
 
     public function networkName($name)
@@ -67,15 +101,15 @@ class StructDefinition
     }
 
 
-    public function nodeFlagTypeName($name)
+    public function flagTypeName($name)
     {
-        $this->nodeFlagTypeName = $name;
+        $this->flagTypeName = $name;
         return $this;
     }
 
-    public function nodeFlagTypeId($id)
+    public function flagTypeId($id)
     {
-        $this->nodeFlagTypeId = $id;
+        $this->flagTypeId = $id;
         return $this;
     }
 

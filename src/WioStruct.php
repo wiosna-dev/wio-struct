@@ -459,7 +459,7 @@ class bunch_of_deprecated_methods
     */
     public function getNodeFlagsTypes()
     {
-        $query = $this->qb->table('wio_struct_node_flags_types');
+        $query = $this->qb->table('wio_struct_flags_types');
         return $query->get();
     }
 
@@ -472,7 +472,7 @@ class bunch_of_deprecated_methods
         if ($nodeFlagsTypeId === false)
         {
             $data = ['name' => $name];
-            $insertId = $this->qb->table('wio_struct_node_flags_types')->insert($data);
+            $insertId = $this->qb->table('wio_struct_flags_types')->insert($data);
             return $insertId;
         }
         else
@@ -484,7 +484,7 @@ class bunch_of_deprecated_methods
 
     public function getNodeFlagsTypeId($name)
     {
-        $query = $this->qb->table('wio_struct_node_flags_types')->select('id')->where('name',$name);
+        $query = $this->qb->table('wio_struct_flags_types')->select('id')->where('name',$name);
         $row = $query->first();
 
         if ($row != null)
@@ -515,7 +515,7 @@ class bunch_of_deprecated_methods
         }
     }
 
-    private function settingsGetNodeFlagTypeId($settings)
+    private function settingsGetflagTypeId($settings)
     {
         if (isset($settings['nodeFlagsTypeId']))
         {
@@ -546,7 +546,7 @@ class bunch_of_deprecated_methods
 
         if ($nodeFlagId === false)
         {
-            $nodeFlagsTypeId = $this->settingsGetNodeFlagTypeId($settings);
+            $nodeFlagsTypeId = $this->settingsGetflagTypeId($settings);
 
             if ($nodeFlagsTypeId === false)
             {
@@ -564,10 +564,10 @@ class bunch_of_deprecated_methods
 
             $data = [
                 'node_id' => $nodeId,
-                'node_flag_type_id' => $nodeFlagsTypeId,
+                'flag_type_id' => $nodeFlagsTypeId,
                 'flag_data' => $flagData
             ];
-            $insertId = $this->qb->table('wio_struct_node_flags')->insert($data);
+            $insertId = $this->qb->table('wio_struct_flags')->insert($data);
             return $insertId;
         }
         else
@@ -583,16 +583,16 @@ class bunch_of_deprecated_methods
 
         if (is_numeric($subQuery))
         {
-            $query = $this->qb->table('wio_struct_node_flags')
+            $query = $this->qb->table('wio_struct_flags')
                 ->select('id')
-                ->where('node_flag_type_id', $subQuery)
+                ->where('flag_type_id', $subQuery)
                 ->where('flag_data', $flagData);
         }
         elseif ($subQuery !== false)
         {
-            $query = $this->qb->table('wio_struct_node_flags')
+            $query = $this->qb->table('wio_struct_flags')
                 ->select('id')
-                ->where($this->qb->raw('node_flag_type_id = ' . $this->qb->subQuery($subQuery)))
+                ->where($this->qb->raw('flag_type_id = ' . $this->qb->subQuery($subQuery)))
                 ->where('flag_data',$flagData);
         }
         else
@@ -645,17 +645,17 @@ class bunch_of_deprecated_methods
 
         if (is_numeric($subQuery))
         {
-            $query = $this->qb->table('wio_struct_node_flags')
-                ->where('node_flag_type_id', $subQuery);
+            $query = $this->qb->table('wio_struct_flags')
+                ->where('flag_type_id', $subQuery);
         }
         elseif ($subQuery !== false)
         {
-            $query = $this->qb->table('wio_struct_node_flags')
-                ->where($this->qb->raw('node_flag_type_id = ' . $this->qb->subQuery($subQuery)));
+            $query = $this->qb->table('wio_struct_flags')
+                ->where($this->qb->raw('flag_type_id = ' . $this->qb->subQuery($subQuery)));
         }
         else
         {
-            $query = $this->qb->table('wio_struct_node_flags');
+            $query = $this->qb->table('wio_struct_flags');
         }
 
         $subQuery2 = false;

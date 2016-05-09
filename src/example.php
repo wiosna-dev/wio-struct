@@ -11,14 +11,14 @@ echo '<!doctype HTML><html><head><meta charset="utf-8"></head><body>';
 # Setting NETWORKS
 #
 $wioStruct->structQuery(new StructDefinition)
-    ->addNetwork('Szlachetna Paczka')
-    ->addNetwork('Akademia Przyszłości');
+    ->add('Network','Szlachetna Paczka')
+    ->add('Network','Akademia Przyszłości');
 
 
-$networks = $wioStruct->structQuery((new StructDefinition))
-    ->getNetworks();
-
-// tab_dump($networks);
+// $networks = $wioStruct->structQuery((new StructDefinition))
+//     ->get('Network');
+//
+// tab_dump($networks,'Networks');
 
 #
 # Setting NODE TYPES
@@ -28,45 +28,46 @@ $administrativeDef = (new StructDefinition)
     ->networkName('administrative');
 
 $wioStruct->structQuery($administrativeDef)
-    ->addNodeType('country')
-    ->addNodeType('state')
-    ->addNodeType('city')
-    ->addNodeType('School');
+    ->add('NodeType', 'country')
+    ->add('NodeType', 'state')
+    ->add('NodeType', 'city')
+    ->add('NodeType', 'School');
 
 $szpNetworkId = $wioStruct->structQuery((new StructDefinition)->networkName('Szlachetna Paczka'))
-    ->firstNetwork('id');
+    ->first('Network','id');
 
 $wioStruct->structQuery(
     (new StructDefinition)
         ->networkId($szpNetworkId))
-    ->addNodeType('województwo')
-    ->addNodeType('region')
-    ->addNodeType('rejon');
+    ->add('NodeType', 'województwo')
+    ->add('NodeType', 'region')
+    ->add('NodeType', 'rejon');
 
 $wioStruct->structQuery(
     (new StructDefinition)
         ->networkName('Akademia Przyszłości'))
-    ->addNodeType('województwo')
-    ->addNodeType('region')
-    ->addNodeType('kolegium');
+    ->add('NodeType', 'województwo')
+    ->add('NodeType', 'region')
+    ->add('NodeType', 'kolegium');
 
-$nodeTypes = $wioStruct->structQuery(new StructDefinition)
-    ->getNodeTypes();
-
+// $nodeTypes = $wioStruct->structQuery(new StructDefinition)
+//     ->get('NodeType');
+//
 // tab_dump($nodeTypes);
+
 
 #
 # Setting NODE FLAG TYPES
 #
 
 $wioStruct->structQuery(new StructDefinition)
-    ->addNodeFlagType('leaders_recrutation_map')
-    ->addNodeFlagType('leader_recruited')
-    ->addNodeFlagType('main_recrutation_map');
+    ->add('FlagType','leaders_recrutation_map')
+    ->add('FlagType','leader_recruited')
+    ->add('FlagType','main_recrutation_map');
 
-$flagTypes = $wioStruct->structQuery((new StructDefinition))
-    ->getNodeFlagTypes();
-
+// $flagTypes = $wioStruct->structQuery(new StructDefinition)
+//     ->get('FlagType');
+//
 // tab_dump($flagTypes);
 
 
@@ -79,10 +80,10 @@ $countryDef = (new StructDefinition)
     ->nodeTypeName('country');
 
 $wioStruct->structQuery($countryDef)
-    ->addNode('Polska')
-    ->addNodeFlag('leaders_recrutation_map')
-    ->addNode('Czeska Republika')
-    ->addNode('USA');
+    ->add('Node','Polska')
+    ->add('Flag','leaders_recrutation_map')
+    ->add('Node','Czeska Republika')
+    ->add('Node','USA');
 
 
 $stateDef = (new StructDefinition)
@@ -96,17 +97,21 @@ $polandDef = (new StructDefinition)
 
 $stateAdder = $wioStruct->structQuery($stateDef);
 
-$stateAdder->addNode('Małopolska')
-    ->linkParent($polandDef)
-    ->addNodeFlag('leaders_recrutation_map');
 
-$stateAdder->addNode('Śląsk')
-    ->linkParent($polandDef)
-    ->addNodeFlag('leaders_recrutation_map');
+// tab_dump($wioStruct->structQuery((new StructDefinition))->get('Node'));
 
-$stateAdder->addNode('Kujawsko-Pomorskie')
-    ->linkParent($polandDef)
-    ->addNodeFlag('leaders_recrutation_map');
+
+$stateAdder->add('Node','Małopolska')
+    ->add('LinkParent',$polandDef)
+    ->add('Flag','leaders_recrutation_map');
+
+$stateAdder->add('Node','Śląsk')
+    ->add('LinkParent',$polandDef)
+    ->add('Flag','leaders_recrutation_map');
+
+$stateAdder->add('Node','Kujawsko-Pomorskie')
+    ->add('LinkParent',$polandDef)
+    ->add('Flag','leaders_recrutation_map');
 
 #
 # Adding City Nodes
@@ -118,7 +123,7 @@ $malopolskaId = $wioStruct->structQuery(
             ->nodeTypeName('state')
             ->nodeName('Małopolska')
     )
-    ->firstNode('id');
+    ->first('Node','id');
 
 $slaskId = $wioStruct->structQuery(
         (new StructDefinition)
@@ -126,7 +131,7 @@ $slaskId = $wioStruct->structQuery(
             ->nodeTypeName('state')
             ->nodeName('Śląsk')
     )
-    ->firstNode('id');
+    ->first('Node','id');
 
 $kujPomId = $wioStruct->structQuery(
         (new StructDefinition)
@@ -134,7 +139,7 @@ $kujPomId = $wioStruct->structQuery(
             ->nodeTypeName('state')
             ->nodeName('Kujawsko-Pomorskie')
     )
-    ->firstNode('id');
+    ->first('Node','id');
 
 
 $cityAdder = $wioStruct->structQuery(
@@ -142,55 +147,55 @@ $cityAdder = $wioStruct->structQuery(
         ->networkName('administrative')
         ->nodeTypeName('city'));
 
-$cityAdder->addNode('Kraków')
-    ->linkParent($malopolskaId)
-    ->addNodeFlag('leaders_recrutation_map');
+$cityAdder->add('Node','Kraków')
+    ->add('LinkParent',$malopolskaId)
+    ->add('Flag','leaders_recrutation_map');
 
-$cityAdder->addNode('Zakopane')
-    ->linkParent($malopolskaId);
+$cityAdder->add('Node','Zakopane')
+    ->add('LinkParent',$malopolskaId);
 
-$cityAdder->addNode('Tarnów')
-    ->linkParent($malopolskaId)
-    ->addNodeFlag('leaders_recrutation_map');
+$cityAdder->add('Node','Tarnów')
+    ->add('LinkParent',$malopolskaId)
+    ->add('Flag','leaders_recrutation_map');
 
-$cityAdder->addNode('Bochnia')
-    ->linkParent($malopolskaId);
+$cityAdder->add('Node','Bochnia')
+    ->add('LinkParent',$malopolskaId);
 
-$cityAdder->addNode('Brzesko')
-    ->linkParent($malopolskaId)
-    ->addNodeFlag('leaders_recrutation_map');
-
-
-$cityAdder->addNode('Katowice')
-    ->linkParent($slaskId)
-    ->addNodeFlag('leaders_recrutation_map');
-
-$cityAdder->addNode('Gliwice')
-    ->linkParent($slaskId);
-
-$cityAdder->addNode('Bielsko-Biała')
-    ->linkParent($slaskId)
-    ->addNodeFlag('leaders_recrutation_map');
-
-$cityAdder->addNode('Pszczyna')
-    ->linkParent($slaskId)
-    ->addNodeFlag('leaders_recrutation_map');
+$cityAdder->add('Node','Brzesko')
+    ->add('LinkParent',$malopolskaId)
+    ->add('Flag','leaders_recrutation_map');
 
 
-$cityAdder->addNode('Toruń')
-    ->linkParent($kujPomId)
-    ->addNodeFlag('leaders_recrutation_map');
+$cityAdder->add('Node','Katowice')
+    ->add('LinkParent',$slaskId)
+    ->add('Flag','leaders_recrutation_map');
 
-$cityAdder->addNode('Włocławek')
-    ->linkParent($kujPomId);
+$cityAdder->add('Node','Gliwice')
+    ->add('LinkParent',$slaskId);
 
-$cityAdder->addNode('Grudziądz')
-    ->linkParent($kujPomId)
-    ->addNodeFlag('leaders_recrutation_map');
+$cityAdder->add('Node','Bielsko-Biała')
+    ->add('LinkParent',$slaskId)
+    ->add('Flag','leaders_recrutation_map');
 
-$cityAdder->addNode('Golub-Dobrzyń')
-    ->linkParent($kujPomId)
-    ->addNodeFlag('leaders_recrutation_map');
+$cityAdder->add('Node','Pszczyna')
+    ->add('LinkParent',$slaskId)
+    ->add('Flag','leaders_recrutation_map');
+
+
+$cityAdder->add('Node','Toruń')
+    ->add('LinkParent',$kujPomId)
+    ->add('Flag','leaders_recrutation_map');
+
+$cityAdder->add('Node','Włocławek')
+    ->add('LinkParent',$kujPomId);
+
+$cityAdder->add('Node','Grudziądz')
+    ->add('LinkParent',$kujPomId)
+    ->add('Flag','leaders_recrutation_map');
+
+$cityAdder->add('Node','Golub-Dobrzyń')
+    ->add('LinkParent',$kujPomId)
+    ->add('Flag','leaders_recrutation_map');
 
 #
 # Adding School Nodes
@@ -202,14 +207,14 @@ $schoolAdder = $wioStruct->structQuery(
         ->nodeTypeName('School')
     );
 
-$schoolAdder->addNode('SP nr 4')
-    ->linkParent(
+$schoolAdder->add('Node','SP nr 4')
+    ->add('LinkParent',
         (new StructDefinition)
             ->networkName('administrative')
             ->nodeTypeName('city')
             ->nodeName('Kraków')
     )
-    ->addNodeFlag('leaders_recrutation_map');
+    ->add('Flag','leaders_recrutation_map');
 
 
 $cityTypeId = $wioStruct->structQuery(
@@ -217,39 +222,39 @@ $cityTypeId = $wioStruct->structQuery(
             ->networkName('administrative')
             ->networkName('city')
     )
-    ->first('id');
+    ->first('NodeType','id');
 
-$schoolAdder->addNode('SP nr 7')
-    ->linkParent(
+$schoolAdder->add('Node','SP nr 7')
+    ->add('LinkParent',
         (new StructDefinition)
             ->nodeTypeId($cityTypeId)
             ->nodeName('Kraków')
     )
-    ->addNodeFlag('leaders_recrutation_map');
+    ->add('Flag','leaders_recrutation_map');
 
-$schoolAdder->addNode('SP nr 11')
-    ->linkParent(
+$schoolAdder->add('Node','SP nr 11')
+    ->add('LinkParent',
         (new StructDefinition)
           ->nodeTypeId($cityTypeId)
             ->nodeName('Kraków')
     );
 
 
-$schoolAdder->addNode('SP nr 2')
-    ->linkParent(
+$schoolAdder->add('Node','SP nr 2')
+    ->add('LinkParent',
         (new StructDefinition)
             ->nodeTypeId($cityTypeId)
             ->nodeName('Toruń')
     )
-    ->addNodeFlag('leaders_recrutation_map');
+    ->add('Flag','leaders_recrutation_map');
 
-$schoolAdder->addNode('SP nr 5')
-    ->linkParent(
+$schoolAdder->add('Node','SP nr 5')
+    ->add('LinkParent',
         (new StructDefinition)
             ->nodeTypeId($cityTypeId)
             ->nodeName('Bielsko-Biała')
         )
-    ->addNodeFlag('leaders_recrutation_map');
+    ->add('Flag','leaders_recrutation_map');
 
 
 
@@ -257,11 +262,11 @@ $schoolAdder->addNode('SP nr 5')
 $schoolDef = (new StructDefinition)
     ->networkName('administrative')
     ->nodeTypeName('school')
-    ->nodeFlagTypeName('leaders_recrutation_map');
+    ->flagTypeName('leaders_recrutation_map');
 
 
 $szkoly = $wioStruct->structQuery($schoolDef)
-    ->get();
+    ->get('Node');
 
 //tab_dump($szkoly);
 
@@ -276,6 +281,7 @@ dump_database($qb);
 
 
 
+die('Allok');
 
 
 
@@ -340,7 +346,7 @@ $stateDef = (new StructDefinition)
 
 $schoolsDef = (new StructDefinition)
     ->networkName('AP')
-    ->linkParent($stateDef)
+    ->add('LinkParent',$stateDef)
     ->flagName('wyświetlanie na mapie')
     ->nodeTypeName('szkoła');
 

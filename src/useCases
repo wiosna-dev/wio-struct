@@ -43,13 +43,13 @@ NodeFlagTypes
 - add - simple
 
 - first - require:
-    - nodeFlagTypeName                          getNodeFlagTypeId NodeFlagType
-    - nodeFlagTypeId
+    - flagTypeName                          getflagTypeId NodeFlagType
+    - flagTypeId
 
 NodeFlags
 - add - require:
-    - nodeFlagTypeName                          getNodeFlagTypeId NodeFlag
-    - nodeFlagTypeId
+    - flagTypeName                          getflagTypeId NodeFlag
+    - flagTypeId
   AND:
     - nodeId                                    getNodeId NodeFlag
     - nodeName, nodeTypeId

@@ -12,7 +12,8 @@ function tab_dump($array, $name = false)
 {
     if (!is_array($array))
     {
-        return '';
+        echo 'DUMP: not an array<br/>';
+        return false;
     }
 
     $html = '';
@@ -54,8 +55,8 @@ function dump_database($pixie)
         'wio_struct_links',
         'wio_struct_networks',
         'wio_struct_node_types',
-        'wio_struct_node_flag_types',
-        'wio_struct_node_flags'
+        'wio_struct_flag_types',
+        'wio_struct_flags'
     ];
 
     foreach($tables as $table){
