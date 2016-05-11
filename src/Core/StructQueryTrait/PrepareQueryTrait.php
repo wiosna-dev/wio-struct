@@ -1,10 +1,12 @@
 <?php
-namespace WioStruct\Core;
+namespace WioStruct\Core\StructQueryTrait;
 
-trait PrepareQueryTrait{
+trait PrepareQueryTrait
+{
 
     private $joinsMade = [];
 
+    private $queryTables = [];
 
     private function setQueryTable()
     {
@@ -15,9 +17,52 @@ trait PrepareQueryTrait{
         }
 
         $this->query = $this->qb->table($this->tableNames[ $this->pointAtTable ]);
+        $this->queryTables[$this->pointAtTable] = true;
+    }
 
+    private function setQueryJoins($joinsTable)
+    {
+        $tableA = $this->tableNames[ $this->pointAtTable ];
+
+        foreach ($joinsTable as $tableName)
+        {
+            $tableB = $this->tableNames[$tableName];
+            if (isset($this->joinKeys[$tableA][$tableB]))
+            {
+                $joinProps = $this->joinKeys[$tableA][$tableB];
+                $this->query->join($tableB, $joinProps[0], $joinProps[1], $joinProps[2]);
+                $this->queryTables[$tableName] = true;
+            }
+            else
+            {
+                $this->errorLog->errorLog('Unable to Join '.$tableA.' and '.$tableB.'.');
+                return false;
+            }
+
+            $tableA = $tableB;
+        }
+    }
+
+    private function setQueryValues($values)
+    {
+        foreach ($values as $valueName)
+        {
+            $value = $this->structDefinition->$valueName;
+
+            $valueColumn = -221;
+            foreach ($this->structDefinitionTableColumns[$valueName] as $table => $column)
+            {
+                if (isset($this->queryTables[$table]))
+                {
+                    $valueColumn = $column;
+                    break;
+                }
+            }
+            $this->query->where($valueColumn, $value);
+        }
 
     }
+
 
     private function prepareQuery()
     {
@@ -85,6 +130,7 @@ trait PrepareQueryTrait{
             );
 
             $this->joinsMade[$rightTableName] = true;
+            $this->queryTables[$rightTableName] = true;
 
             $leftTableName = $rightTableName;
         }

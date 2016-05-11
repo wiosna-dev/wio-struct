@@ -3,9 +3,11 @@ namespace WioStruct\Core;
 
 class StructQuery
 {
-    use ProccessingArraysTrait;
-    use PrepareQueryTrait;
-    use IdRetriverTrait;
+    use StructQueryTrait\AddTrait;
+    use StructQueryTrait\IdRetriverTrait;
+    use StructQueryTrait\PrepareQueryTrait;
+    use StructQueryTrait\ProccessingArraysTrait;
+
 
     private $structDefinition;
     private $errorLog;
@@ -37,80 +39,6 @@ class StructQuery
         $this->recentlyAdded = $inserts;
     }
 
-    public function add($mainTableName, $value0, $value1 = false, $value2 = false)
-    {
-        $this->pointAtTable = $mainTableName;
-
-        $structDefinition = clone $this->structDefinition;
-        $structDefinition->set($mainTableName,$this->tableColumns[ $mainTableName ][0],$value0);
-
-        $tableId = $this->newQuery($structDefinition)
-            ->first($mainTableName,'id');
-
-
-        if ($tableId === false)
-        {
-            $values = $this->prepareValues($value0,$value1,$value2);
-            if ($values)
-            {
-                $this->setQueryTable();
-
-                $idInserted = $this->query->insert($values);
-
-                if ($mainTableName == 'Node')
-                {
-                    $this->structDefinition->nodeId($idInserted);
-                }
-            }
-            else
-            {
-                $this->errorLog->errorLog('Not able to set proper values.');
-            }
-        }
-        else
-        {
-            $this->errorLog->errorLog('We already have "'.print_r($value0,true).'" [id:'.$tableId.'] in table '.$mainTableName.'.');
-        }
-
-        return $this;
-    }
-
-    private function prepareValues($value0, $value1, $value2)
-    {
-        $values = [];
-        $tableColumns = $this->tableColumns[ $this->pointAtTable ];
-
-        for ($i=0; $i<3; ++$i)
-        {
-            $valueName = 'value'.$i;
-            $value = $$valueName;
-            if (is_a($value, '\WioStruct\Core\StructDefinition'))
-            {
-                $value = $this->newQuery($value)
-                    ->first('Node','id');
-            }
-
-            if (($$valueName !== false) and isset($tableColumns[$i]))
-            {
-                $values[ $tableColumns[$i] ] = $value;
-            }
-        }
-
-        if (isset($tableColumns['required']))
-        {
-            foreach ($tableColumns['required'] as $requiredTable => $requiredColumn)
-            {
-                $tableId = $this->newQuery(clone $this->structDefinition)
-                    ->first($requiredTable,'id');
-
-                $values[ $requiredColumn ] = $tableId;
-            }
-        }
-
-        return $values;
-    }
-
-
     public function get($mainTableName, $selects = false)
     {
         $this->pointAtTable = $mainTableName;
@@ -141,8 +69,8 @@ class StructQuery
             $this->query->select($this->tableNames[ $this->pointAtTable ].'.'.$selects);
             if ($this->pointAtTable == 'LinkParent')
             {
-                var_dump($this->structDefinition);
-                $this->printQuery();
+                // var_dump($this->structDefinition);
+                // $this->printQuery();
 
             }
             $answer = $this->query->first();

@@ -220,7 +220,7 @@ $schoolAdder->add('Node','SP nr 4')
 $cityTypeId = $wioStruct->structQuery(
         (new StructDefinition)
             ->networkName('administrative')
-            ->networkName('city')
+            ->nodeTypeName('city')
     )
     ->first('NodeType','id');
 
@@ -265,7 +265,7 @@ $schoolDef = (new StructDefinition)
 $szkoly = $wioStruct->structQuery($schoolDef)
     ->get('Node');
 
-//tab_dump($szkoly);
+tab_dump($szkoly);
 
 dump_database($qb);
 die('Allok');

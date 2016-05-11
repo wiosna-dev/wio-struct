@@ -51,11 +51,11 @@ function tab_dump($array, $name = false)
 function dump_database($pixie)
 {
     $tables = [
-        'wio_struct_nodes',
-        'wio_struct_links',
         'wio_struct_networks',
         'wio_struct_node_types',
         'wio_struct_flag_types',
+        'wio_struct_nodes',
+        'wio_struct_links',
         'wio_struct_flags'
     ];
 

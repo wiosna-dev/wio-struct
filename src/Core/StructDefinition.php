@@ -16,14 +16,14 @@ class StructDefinition
 
     function __construct()
     {
-        $this->networkName = false;
         $this->networkId = false;
-        $this->nodeTypeName = false;
+        $this->networkName = false;
         $this->nodeTypeId = false;
-        $this->nodeName = false;
+        $this->nodeTypeName = false;
         $this->nodeId = false;
-        $this->flagTypeName = false;
+        $this->nodeName = false;
         $this->flagTypeId = false;
+        $this->flagTypeName = false;
         $this->linkParent = false;
         $this->linkChildren = false;
     }
@@ -51,17 +51,6 @@ class StructDefinition
         ]
     ];
 
-    private $columns = [
-        'networkId'    => 'wio_struct_networks.id',
-        'netowrkName'  => 'wio_struct_networks.name',
-        'nodeTypeId'   => 'wio_struct_node_types.id',
-        'nodeTypeName' => 'wio_struct_node_types.name',
-        'nodeId'       => 'wio_struct_node.id',
-        'nodeName'     => 'wio_struct_node.name',
-        'flagTypeId'   => 'wio_struct_flag_types.id',
-        'flagTypeName' => 'wio_struct_flag_types.name',
-    ]
-
     public function set($tableName, $valueName, $value)
     {
         if (!isset($this->values[ $tableName ][ $valueName ]))
@@ -73,24 +62,18 @@ class StructDefinition
         $this->$key = $value;
     }
 
+    public function networkId($id)
+    {
+      $this->networkId = $id;
+      return $this;
+    }
+
     public function networkName($name)
     {
         $this->networkName = $name;
         return $this;
     }
 
-    public function networkId($id)
-    {
-        $this->networkId = $id;
-        return $this;
-    }
-
-
-    public function nodeTypeName($name)
-    {
-        $this->nodeTypeName = $name;
-        return $this;
-    }
 
     public function nodeTypeId($id)
     {
@@ -98,6 +81,17 @@ class StructDefinition
         return $this;
     }
 
+    public function nodeTypeName($name)
+    {
+      $this->nodeTypeName = $name;
+      return $this;
+    }
+
+    public function nodeId($id)
+    {
+      $this->nodeId = $id;
+      return $this;
+    }
 
     public function nodeName($name)
     {
@@ -105,25 +99,17 @@ class StructDefinition
         return $this;
     }
 
-    public function nodeId($id)
+    public function flagTypeId($id)
     {
-        $this->nodeId = $id;
-        return $this;
+      $this->flagTypeId = $id;
+      return $this;
     }
-
 
     public function flagTypeName($name)
     {
         $this->flagTypeName = $name;
         return $this;
     }
-
-    public function flagTypeId($id)
-    {
-        $this->flagTypeId = $id;
-        return $this;
-    }
-
 
     public function linkParent(StructDefinition $nodeDef)
     {
