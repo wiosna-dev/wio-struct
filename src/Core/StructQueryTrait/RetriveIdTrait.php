@@ -1,7 +1,7 @@
 <?php
 namespace WioStruct\Core\StructQueryTrait;
 
-trait IdRetriverTrait
+trait RetriveIdTrait
 {
 
     private $retrievingIdPossibilities =

@@ -68,8 +68,12 @@ trait PrepareQueryTrait
     {
         $this->setQueryTable();
 
+        $this->prepareLinkDefinitions();
+
         foreach ($this->structDefinitionVariables as $varName => $varProperties)
         {
+            // var_dump($varName);
+            // var_dump($this->structDefinition->$varName);
             if ($this->structDefinition->$varName === false)
             {
                 continue;
@@ -92,7 +96,6 @@ trait PrepareQueryTrait
                     $this->query->where($this->tableNames[$tableName].'.'.$tableVariableName, $variable);
                 }
             }
-
         }
     }
 
@@ -136,9 +139,77 @@ trait PrepareQueryTrait
         }
     }
 
+
+
+    private function prepareLinkDefinitions()
+    {
+        $toCheck =
+        [
+            'linkParent'   => 'parent',
+            'linkChildren' => 'children'
+        ];
+        $toRetrieve =
+        [
+            'networkId'    => 'NetworkId',
+            'networkName'  => 'NetworkName',
+            'nodeTypeId'   => 'NodeTypeId',
+            'nodeTypeName' => 'NodeTypeName',
+            'nodeId'       => 'NodeId',
+            'nodeName'     => 'NodeName',
+            'flagTypeId'   => 'FlagTypeId',
+            'flagTypeName' => 'FlagTypeName'
+        ];
+
+        foreach ($toCheck as $variable => $prefix)
+        {
+            $struct = $this->structDefinition->$variable;
+            if ($struct)
+            {
+                foreach ($toRetrieve as $name => $newName)
+                {
+                    if ($struct->$name)
+                    {
+                        $nameWithPrefix = $prefix.$newName;
+                        $this->structDefinition->$nameWithPrefix = $struct->$name;
+                    }
+                }
+            }
+        }
+    }
+
+
     private function printQuery()
     {
         $q = $this->query->getQuery();
         echo $q->getRawSql().'<br/>';
     }
 }
+
+/*
+SELECT
+  Nodes.`id` as NodeId,
+  Nodes.`name` as NodeName,
+  Nodes.`lat` as NodeLat,
+  Nodes.`lng` as NodeLng,
+  NodeTypes.`name` as NodeType,
+  Networks.`name` as Network
+FROM `wio_struct_nodes` as Nodes
+  INNER JOIN `wio_struct_node_types` as NodeTypes
+    ON Nodes.`node_type_id` = NodeTypes.`id`
+  INNER JOIN `wio_struct_networks` as Networks
+    ON NodeTypes.`network_id` = Networks.`id`
+  INNER JOIN `wio_struct_links` as Links
+  	ON Nodes.`id` = Links.`node_children_id`
+  INNER JOIN `wio_struct_nodes` as ParentNodes
+  	ON ParentNodes.`id` = Links.`node_parent_id`
+  INNER JOIN `wio_struct_node_types` as ParentNodeTypes
+  	ON ParentNodeTypes.`id` = ParentNodes.`node_type_id`
+  INNER JOIN `wio_struct_networks` as ParentNetworks
+  	ON ParentNetworks.`id` = ParentNodeTypes.`network_id`
+WHERE Networks.name = 'administrative'
+  AND NodeTypes.name = 'city'
+  AND ParentNodes.name = 'Śląsk'
+  AND ParentNodeTypes.name = 'state'
+  AND ParentNetworks.name = 'administrative'
+
+  */

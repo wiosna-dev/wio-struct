@@ -5,17 +5,18 @@ namespace WioStruct\Core\StructQueryTrait;
 trait ProccessingArraysTrait
 {
 
-    private $structDefinitionColumns =
+    private $tableNames =
     [
-        'networkId'    => 'wio_struct_networks.id',
-        'networkName'  => 'wio_struct_networks.name',
-        'nodeTypeId'   => 'wio_struct_node_types.id',
-        'nodeTypeName' => 'wio_struct_node_types.name',
-        'nodeId'       => 'wio_struct_nodes.id',
-        'nodeName'     => 'wio_struct_nodes.name',
-        'flagTypeId'   => 'wio_struct_flag_types.id',
-        'flagTypeName' => 'wio_struct_flag_types.name'
+        'Network'       => 'wio_struct_networks',
+        'NodeType'      => 'wio_struct_node_types',
+        'Node'          => 'wio_struct_nodes',
+        'Flag'          => 'wio_struct_flags',
+        'FlagType'      => 'wio_struct_flag_types',
+        'Link'          => 'wio_struct_links',
+        'LinkParent'    => 'wio_struct_links',
+        'LinkChildren'  => 'wio_struct_links'
     ];
+
     private $structDefinitionTableColumns =
     [
         'networkId' =>
@@ -58,19 +59,6 @@ trait ProccessingArraysTrait
         ]
     ];
 
-
-    private $tableNames =
-    [
-        'Network'       => 'wio_struct_networks',
-        'NodeType'      => 'wio_struct_node_types',
-        'Node'          => 'wio_struct_nodes',
-        'Flag'          => 'wio_struct_flags',
-        'FlagType'      => 'wio_struct_flag_types',
-        'Link'          => 'wio_struct_links',
-        'LinkParent'    => 'wio_struct_links',
-        'LinkChildren'  => 'wio_struct_links'
-    ];
-
     private $joinKeys =
     [
         'wio_struct_node_types' =>
@@ -79,7 +67,17 @@ trait ProccessingArraysTrait
         ],
         'wio_struct_nodes' =>
         [
-            'wio_struct_node_types' => ['wio_struct_nodes.node_type_id','=','wio_struct_node_types.id']
+            'wio_struct_node_types' => ['wio_struct_nodes.node_type_id','=','wio_struct_node_types.id'],
+            'wio_struct_flags' => ['wio_struct_flags.node_id','=','wio_struct_nodes.id']
+        ],
+        'wio_struct_flags' =>
+        [
+            'wio_struct_nodes' => ['wio_struct_flags.node_id','=','wio_struct_nodes.id'],
+            'wio_struct_flag_types' => ['wio_struct_flags.flag_type_id','=','wio_struct_flag_types.id']
+        ],
+        'wio_struct_flag_types' =>
+        [
+            'wio_struct_flags' => ['wio_struct_flags.flag_type_id','=','wio_struct_flag_types.id']
         ]
     ];
 
@@ -167,7 +165,12 @@ trait ProccessingArraysTrait
             'Network' => [
                 'NodeType' => ['node_type_id','id'],
                 'Network' => ['network_id','id']
+            ],
+            'FlagType' => [
+                'Flag' => ['id','node_id'],
+                'FlagType' => ['flag_type_id','id']
             ]
+
         ],
         'NodeType' => [
             'Network' => [
