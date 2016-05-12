@@ -5,19 +5,15 @@ class StructQuery
 {
     use StructQueryTrait\AddTrait;
     use StructQueryTrait\GetTrait;
-    use StructQueryTrait\FirstTrait;
-    use StructQueryTrait\RetriveIdTrait;
+    use StructQueryTrait\GetIdTrait;
     use StructQueryTrait\PrepareQueryTrait;
     use StructQueryTrait\ProccessingArraysTrait;
-
 
     private $structDefinition;
     private $errorLog;
     private $qb;
 
-    private $recentlyAdded;
-    private $pointAtTable;
-
+    private $mainTable;
     private $query;
 
     function __construct(\WioStruct\Core\StructDefinition $structDefinition, $errorLog, $qb)
@@ -26,7 +22,7 @@ class StructQuery
         $this->errorLog = $errorLog;
         $this->qb = $qb;
 
-        $this->pointAtTable = false;
+        $this->mainTable = false;
         $this->recentlyAdded = false;
     }
 
@@ -35,4 +31,12 @@ class StructQuery
     {
         return new StructQuery($structDefinition,$this->errorLog,$this->qb);
     }
+
+
+    private function printQuery()
+    {
+        $q = $this->query->getQuery();
+        echo $q->getRawSql().'<br/>';
+    }
+
 }

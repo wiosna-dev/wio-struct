@@ -1,88 +1,90 @@
 <?php
 namespace WioStruct\Core\StructQueryTrait;
 
-
 trait ProccessingArraysTrait
 {
-
-    private $tableNames =
-    [
-        'Network'       => 'wio_struct_networks',
-        'NodeType'      => 'wio_struct_node_types',
-        'Node'          => 'wio_struct_nodes',
-        'Flag'          => 'wio_struct_flags',
-        'FlagType'      => 'wio_struct_flag_types',
-        'Link'          => 'wio_struct_links',
-        'LinkParent'    => 'wio_struct_links',
-        'LinkChildren'  => 'wio_struct_links'
-    ];
-
-    private $structDefinitionTableColumns =
-    [
-        'networkId' =>
-        [
-            'Network' => 'wio_struct_networks.id',
-            'NodeType' => 'wio_struct_node_types.netowrk_id'
+    private $tableNames = [
+        'Network' => [
+            'table' => 'wio_struct_networks',
+            'as' => 'Network'
         ],
-        'networkName' =>
-        [
-            'Network' => 'wio_struct_networks.name'
+        'NodeType' => [
+            'table' => 'wio_struct_node_types',
+            'as' => 'NodeType'
         ],
-        'nodeTypeId' =>
-        [
-            'NodeType' => 'wio_struct_node_types.id',
-            'Node' => 'wio_struct_nodes.node_type_id'
+        'Node' => [
+            'table' => 'wio_struct_nodes',
+            'as' => 'Node'
         ],
-        'nodeTypeName' =>
-        [
-            'NodeType' => 'wio_struct_node_types.name'
+        'Flag' => [
+            'table' => 'wio_struct_flags',
+            'as' => 'Flag'
         ],
-        'nodeId' =>
-        [
-            'Node' => 'wio_struct_nodes.id',
-            'Flag' => 'wio_struct_flags.node_id',
-            'LinkParent' => 'wio_sturct_links.node_parent_id',
-            'LinkChildren' => 'wio_sturct_links.node_children_id'
+        'FlagType' => [
+            'table' => 'wio_struct_flag_types',
+            'as' => 'FlagType'
         ],
-        'nodeName' =>
-        [
-            'Node' => 'wio_struct_nodes.name',
+        'LinkParent' => [
+            'table' => 'wio_struct_links',
+            'as' => 'LinkParent'
         ],
-        'flagTypeId' =>
-        [
-            'FlagType' => 'wio_struct_flag_types.id',
-            'Flag' => 'wio_struct_flags.flag_type_id'
-        ],
-        'flagTypeName' =>
-        [
-            'FlagType' => 'wio_struct_flag_types.name'
+        'LinkChildren' => [
+            'table' => 'wio_struct_links',
+            'as' => 'LinkChildren'
         ]
     ];
 
-    private $joinKeys =
-    [
-        'wio_struct_node_types' =>
-        [
-            'wio_struct_networks' => ['wio_struct_node_types.network_id','=','wio_struct_networks.id']
+    private $structDefinitionTableColumns = [
+        'networkId' => [
+            'Network' => 'id',
+            'NodeType' => 'netowrk_id'
         ],
-        'wio_struct_nodes' =>
-        [
-            'wio_struct_node_types' => ['wio_struct_nodes.node_type_id','=','wio_struct_node_types.id'],
-            'wio_struct_flags' => ['wio_struct_flags.node_id','=','wio_struct_nodes.id']
+        'networkName' => [
+            'Network' => 'name'
         ],
-        'wio_struct_flags' =>
-        [
-            'wio_struct_nodes' => ['wio_struct_flags.node_id','=','wio_struct_nodes.id'],
-            'wio_struct_flag_types' => ['wio_struct_flags.flag_type_id','=','wio_struct_flag_types.id']
+        'nodeTypeId' => [
+            'NodeType' => 'id',
+            'Node' => 'node_type_id'
         ],
-        'wio_struct_flag_types' =>
-        [
-            'wio_struct_flags' => ['wio_struct_flags.flag_type_id','=','wio_struct_flag_types.id']
+        'nodeTypeName' => [
+            'NodeType' => 'name'
+        ],
+        'nodeId' => [
+            'Node' => 'id',
+            'Flag' => 'node_id',
+            'LinkParent' => 'node_parent_id',
+            'LinkChildren' => 'node_children_id'
+        ],
+        'nodeName' => [
+            'Node' => 'name',
+        ],
+        'flagTypeId' => [
+            'FlagType' => 'id',
+            'Flag' => 'flag_type_id'
+        ],
+        'flagTypeName' => [
+            'FlagType' => 'name'
         ]
     ];
 
-    private $tableColumns =
-    [
+    private $joinKeys = [
+        'Node' => [
+          'NodeType' => ['Node','node_type_id','NodeType','id'],
+          'Flag' => ['Flag','node_id','Node','id']
+        ],
+        'NodeType' => [
+            'Network' => ['NodeType','network_id','Network','id']
+        ],
+        'Flag' => [
+            'Node' => ['Flag','node_id','Node','id'],
+            'FlagType' => ['Flag','flag_type_id','FlagType','id']
+        ],
+        'FlagType' => [
+            'Flag' => ['Flag','flag_type_id','FlagType','id']
+        ]
+    ];
+
+    private $tableColumns = [
         'Network' => [
             0 => 'name'
         ],
@@ -114,83 +116,131 @@ trait ProccessingArraysTrait
             'required' => [
                 'Node' => 'node_children_id'
             ]
-        ]
-    ];
-
-
-    private $structDefinitionVariables =
-    [
-        'networkName' => [
-            'table'  => ['Network' => 'name']
         ],
-        'networkId' => [
-            'table'  => ['Network' => 'id'],
-            'usedIn' => ['NodeType' => 'network_id']
-        ],
-        'nodeTypeName' => [
-            'table'  => ['NodeType' => 'name']
-        ],
-        'nodeTypeId' => [
-            'table'  => ['NodeType' => 'id'],
-            'usedIn' => ['Node' => 'node_type_id']
-        ],
-        'nodeName' => [
-            'table'  => ['Node' => 'name']
-        ],
-        'nodeId' => [
-            'table'  => ['Node' => 'id'],
-            'usedIn' => ['Flag' => 'node_id']
-        ],
-        'flagTypeName' => [
-            'table'  => ['FlagType' => 'name']
-        ],
-        'flagTypeId' => [
-            'table'  => ['FlagType' => 'id'],
-            'usedIn' => ['Flag' => 'flag_type_id']
-        ],
-        'linkParent' => [
-            'table'  => ['Link' => 'node_parent_id']
-        ],
-        'linkChildren' => [
-            'table'  => ['Link' => 'node_children_id']
-        ]
-    ];
-
-    private $possibleJoins =
-    [
-        'Node' => [
-            'NodeType' => [
-                'NodeType' => ['node_type_id','id']
-            ],
-            'Network' => [
-                'NodeType' => ['node_type_id','id'],
-                'Network' => ['network_id','id']
-            ],
-            'FlagType' => [
-                'Flag' => ['id','node_id'],
-                'FlagType' => ['flag_type_id','id']
+        'LinkChildren' => [
+            0 => 'node_children_id',
+            'required' => [
+                'Node' => 'node_parent_id'
             ]
+        ]
+    ];
 
+    private $addingTableSettings = [
+        'Network' => [
+            'columns' => ['name'=>0],
+            'check' => ['name']
+        ],
+        'FlagType' => [
+            'columns' => ['name'=>0],
+            'check' => ['name']
         ],
         'NodeType' => [
-            'Network' => [
-                'Network' => ['network_id','id']
-            ]
+            'requireId' => 'Network',
+            'columns' => ['network_id'=>'requiredId', 'name'=>0],
+            'check' => ['network_id','name']
+        ],
+        'Node' => [
+            'requireId' => 'NodeType',
+            'columns' => ['node_type_id'=>'requiredId', 'name'=>0, 'lat'=>1, 'lng'=>2],
+            'check' => ['node_type_id','name']
+        ],
+        'Flag' => [
+            'requireId' => 'Node',
+            'columns' => ['node_id'=>'requiredId', 'flag_type_id'=>'requireFlagTypeId', 'flag_data'=>1],
+            'check' => ['node_id','flag_type_id']
         ],
         'LinkParent' => [
+            'requireId' => 'Node',
+            'columns' => ['node_children_id'=>'requiredId','node_parent_id'=>'requireNodeId'],
+            'check' => ['node_children_id','node_parent_id']
+        ],
+        'LinkChildren' => [
+            'requireId' => 'Node',
+            'columns' => ['node_children_id'=>'requiredId','node_parent_id'=>'requireNodeId'],
+            'check' => ['node_children_id','node_parent_id']
+        ]
+    ];
+
+    private $getColumns = [
+        'Node' => [
             'Node' => [
-                'Node' => ['node_parent_id','id']
+                'id' => 'NodeId',
+                'name' => 'NodeName',
+                'lat' => 'NodeLat',
+                'lng' => 'NodeLng',
             ],
             'NodeType' => [
-                'Node' => ['node_parent_id','id'],
-                'NodeType' => ['node_type_id','id']
+                'name' => 'NodeType',
             ],
             'Network' => [
-                'Node' => ['node_parent_id','id'],
-                'NodeType' => ['node_type_id','id'],
-                'Network' => ['network_id','id']
+                'name' => 'Network'
+            ],
+            'Flag' => [
+                'flag_data' => 'FlagData'
+            ],
+            'FlagType' => [
+                'name' => 'FlagType'
             ]
         ]
     ];
 
+
+    private $gettingIds =
+    [
+        'Network' => [
+            [
+                'values' => ['networkId'],
+                'table'  => false,
+            ],
+            [
+                'values' => ['networkName'],
+                'table'  => 'Network'
+            ]
+        ],
+        'FlagType' => [
+            [
+                'values' => ['flagTypeId'],
+                'table'  => false,
+            ],
+            [
+                'values' => ['flagTypeName'],
+                'table'  => 'FlagType'
+            ]
+        ],
+        'NodeType' => [
+            [
+                'values' => ['nodeTypeId'],
+                'table'  => false,
+            ],
+            [
+                'values' => ['nodeTypeName','networkId'],
+                'table'  => 'NodeType'
+            ],
+            [
+                'values' => ['nodeTypeName','networkName'],
+                'table'  => 'NodeType',
+                'join'   => ['Network']
+            ]
+        ],
+        'Node' => [
+            [
+                'values' => ['nodeId'],
+                'table'  => false,
+            ],
+            [
+                'values' => ['nodeName','nodeTypeId'],
+                'table'  => 'Node'
+            ],
+            [
+                'values' => ['nodeName','nodeTypeName','networkId'],
+                'table'  => 'Node',
+                'join'   => ['NodeType']
+            ],
+            [
+                'values' => ['nodeName','nodeTypeName','networkName'],
+                'table'  => 'Node',
+                'join'   => ['NodeType','Network']
+            ]
+        ]
+    ];
 }

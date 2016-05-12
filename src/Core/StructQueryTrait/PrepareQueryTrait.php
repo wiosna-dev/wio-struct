@@ -10,19 +10,23 @@ trait PrepareQueryTrait
 
     private function setQueryTable()
     {
-        if (!isset($this->tableNames[ $this->pointAtTable ]))
-        {
-            $this->errorLog->errorLog('Unknown table '.$this->pointAtTable.' in database.');
-            return false;
-        }
+        $tableData = $this->tableNames[ $this->mainTable ];
 
-        $this->query = $this->qb->table($this->tableNames[ $this->pointAtTable ]);
-        $this->queryTables[$this->pointAtTable] = true;
+        $this->query = $this->qb->table($this->qb->raw($tableData['table'].' as '.$tableData['as']));
+        $this->queryTables[$tableData['as']] = true;
+    }
+
+    private function joinlessSetQueryTable()
+    {
+        $tableData = $this->tableNames[ $this->mainTable ];
+
+        $this->query = $this->qb->table($tableData['table']);
+        $this->queryTables[$tableData['as']] = true;
     }
 
     private function setQueryJoins($joinsTable)
     {
-        $tableA = $this->tableNames[ $this->pointAtTable ];
+        $tableA = $this->tableNames[ $this->mainTable ]['as'];
 
         foreach ($joinsTable as $tableName)
         {
@@ -30,8 +34,13 @@ trait PrepareQueryTrait
             if (isset($this->joinKeys[$tableA][$tableB]))
             {
                 $joinProps = $this->joinKeys[$tableA][$tableB];
-                $this->query->join($tableB, $joinProps[0], $joinProps[1], $joinProps[2]);
-                $this->queryTables[$tableName] = true;
+                $this->query->join(
+                    $this->qb->raw($tableB['table'].' as '.$tableB['as']),
+                    $joinProps[0],
+                    $joinProps[1],
+                    $joinProps[2]
+                );
+                $this->queryTables[ $tableB['as'] ] = true;
             }
             else
             {
@@ -85,7 +94,7 @@ trait PrepareQueryTrait
             $tableName = $table['key'];
             $tableVariableName = $table['value'];
 
-            if ($tableName == $this->pointAtTable)
+            if ($tableName == $this->mainTable)
             {
                 $this->query->where($this->tableNames[$tableName].'.'.$tableVariableName,$variable);
             }
@@ -107,12 +116,12 @@ trait PrepareQueryTrait
         }
         else
         {
-            if (isset($this->possibleJoins[$this->pointAtTable][$tableName]))
+            if (isset($this->possibleJoins[$this->mainTable][$tableName]))
             {
                 $this->queryJoin($tableName, $tableVariableName, $variable);
                 return true;
             }
-            $this->errorLog->errorLog('Not possible to join table '.$this->pointAtTable.' with StructDefinition variable '.$tableName.':'.$tableVariableName.'.');
+            $this->errorLog->errorLog('Not possible to join table '.$this->mainTable.' with StructDefinition variable '.$tableName.':'.$tableVariableName.'.');
             return false;
         }
 
@@ -120,9 +129,9 @@ trait PrepareQueryTrait
 
     private function queryJoin($tableName, $tableVariableName, $variable)
     {
-        $joinData = $this->possibleJoins[ $this->pointAtTable ][ $tableName ];
+        $joinData = $this->possibleJoins[ $this->mainTable ][ $tableName ];
 
-        $leftTableName = $this->pointAtTable;
+        $leftTableName = $this->mainTable;
         foreach ($joinData as $rightTableName=>$joinKeys)
         {
             $this->query->join(
@@ -176,13 +185,6 @@ trait PrepareQueryTrait
             }
         }
     }
-
-
-    private function printQuery()
-    {
-        $q = $this->query->getQuery();
-        echo $q->getRawSql().'<br/>';
-    }
 }
 
 /*
@@ -212,4 +214,4 @@ WHERE Networks.name = 'administrative'
   AND ParentNodeTypes.name = 'state'
   AND ParentNetworks.name = 'administrative'
 
-  */
+*/

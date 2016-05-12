@@ -125,24 +125,21 @@ $malopolskaId = $wioStruct->structQuery(
             ->networkName('administrative')
             ->nodeTypeName('state')
             ->nodeName('Małopolska')
-    )
-    ->first('Node','id');
+    )->getId('Node');
 
 $slaskId = $wioStruct->structQuery(
         (new StructDefinition)
             ->networkName('administrative')
             ->nodeTypeName('state')
             ->nodeName('Śląsk')
-    )
-    ->first('Node','id');
+    )->getId('Node');
 
 $kujPomId = $wioStruct->structQuery(
         (new StructDefinition)
             ->networkName('administrative')
             ->nodeTypeName('state')
             ->nodeName('Kujawsko-Pomorskie')
-    )
-    ->first('Node','id');
+    )->getId('Node');
 
 
 $cityAdder = $wioStruct->structQuery(
@@ -216,24 +213,21 @@ $schoolAdder->add('Node','SP nr 4')
             ->networkName('administrative')
             ->nodeTypeName('city')
             ->nodeName('Kraków')
-    )
-    ->add('Flag','leaders_recrutation_map');
+    )->add('Flag','leaders_recrutation_map');
 
 
 $cityTypeId = $wioStruct->structQuery(
         (new StructDefinition)
             ->networkName('administrative')
             ->nodeTypeName('city')
-    )
-    ->first('NodeType','id');
+    )->getId('NodeType');
 
 $schoolAdder->add('Node','SP nr 7')
     ->add('LinkParent',
         (new StructDefinition)
             ->nodeTypeId($cityTypeId)
             ->nodeName('Kraków')
-    )
-    ->add('Flag','leaders_recrutation_map','takie tam');
+    )->add('Flag','leaders_recrutation_map','takie tam');
 
 $schoolAdder->add('Node','SP nr 11')
     ->add('LinkParent',
@@ -248,16 +242,14 @@ $schoolAdder->add('Node','SP nr 2')
         (new StructDefinition)
             ->nodeTypeId($cityTypeId)
             ->nodeName('Toruń')
-    )
-    ->add('Flag','leaders_recrutation_map');
+    )->add('Flag','leaders_recrutation_map');
 
 $schoolAdder->add('Node','SP nr 5')
     ->add('LinkParent',
         (new StructDefinition)
             ->nodeTypeId($cityTypeId)
             ->nodeName('Bielsko-Biała')
-        )
-    ->add('Flag','leaders_recrutation_map');
+    )->add('Flag','leaders_recrutation_map');
 
 
 $szkoly = $wioStruct->structQuery(
@@ -284,6 +276,5 @@ $szkoly = $wioStruct->structQuery(
     )->get('Node');
 
 tab_dump($szkoly);
-
 
 dump_database($qb);

@@ -4,49 +4,11 @@ namespace WioStruct\Core\StructQueryTrait;
 trait AddTrait
 {
 
-    private $addingTableSettings =
-    [
-        'Network' => [
-            'columns' => ['name'=>0],
-            'check' => ['name']
-        ],
-        'FlagType' => [
-            'columns' => ['name'=>0],
-            'check' => ['name']
-        ],
-        'NodeType' => [
-            'requireId' => 'Network',
-            'columns' => ['network_id'=>'requiredId', 'name'=>0],
-            'check' => ['network_id','name']
-        ],
-        'Node' => [
-            'requireId' => 'NodeType',
-            'columns' => ['node_type_id'=>'requiredId', 'name'=>0, 'lat'=>1, 'lng'=>2],
-            'check' => ['node_type_id','name']
-        ],
-        'Flag' => [
-            'requireId' => 'Node',
-            'columns' => ['node_id'=>'requiredId', 'flag_type_id'=>'requireFlagTypeId', 'flag_data'=>1],
-            'check' => ['node_id','flag_type_id']
-        ],
-        'LinkParent' => [
-            'requireId' => 'Node',
-            'columns' => ['node_children_id'=>'requiredId','node_parent_id'=>'requireNodeId'],
-            'check' => ['node_children_id','node_parent_id']
-        ],
-        'LinkChildren' => [
-            'requireId' => 'Node',
-            'columns' => ['node_children_id'=>'requiredId','node_parent_id'=>'requireNodeId'],
-            'check' => ['node_children_id','node_parent_id']
-        ]
-    ];
-
-
-    public function add($mainTableName, $value0, $value1 = false, $value2 = false)
+    public function add($mainTable, $value0, $value1 = false, $value2 = false)
     {
-        $this->pointAtTable = $mainTableName;
+        $this->mainTable = $mainTable;
         $values = [$value0, $value1, $value2];
-        $settings = $this->addingTableSettings[$this->pointAtTable];
+        $settings = $this->addingTableSettings[ $this->mainTable ];
 
         if ($this->getRequiredColumns($settings, $values) === false)
         {
@@ -59,6 +21,7 @@ trait AddTrait
             if ($this->valuesAreOk($settings,$values))
             {
                 $this->setQueryTable();
+                $this->joinlessSetQueryTable();
                 $idInserted = $this->query->insert($values);
 
                 if ($mainTableName == 'Node')
@@ -85,7 +48,7 @@ trait AddTrait
         if (isset($settings['requireId']))
         {
             $requiredId = $this->newQuery(clone $this->structDefinition)
-                ->retriveId($settings['requireId']);
+                ->getId($settings['requireId']);
             if ($requiredId === false)
             {
                 return false;
@@ -99,15 +62,15 @@ trait AddTrait
             {
                 $setValues[$i] = $requiredId;
             }
-            if (is_numeric($column))
+            elseif (is_numeric($column))
             {
                 $setValues[$i] = $values[$column];
             }
-            if ($column === 'requireFlagTypeId')
+            elseif ($column === 'requireFlagTypeId')
             {
                 $setValues[$i] = $this->requireFlagTypeId($values[0]);
             }
-            if ($column === 'requireNodeId')
+            elseif ($column === 'requireNodeId')
             {
                 $setValues[$i] = $this->requireNodeId($values[0]);
             }
@@ -126,7 +89,7 @@ trait AddTrait
         if (is_string($flagTypeData))
         {
             $answer = $this->qb
-                           ->table($this->tableNames['FlagType'])
+                           ->table($this->tableNames['FlagType']['table'])
                            ->where('name', $flagTypeData)
                            ->select('id')
                            ->first();
@@ -149,7 +112,7 @@ trait AddTrait
         if (is_a($nodeData, 'WioStruct\Core\StructDefinition'))
         {
             return $this->newQuery($nodeData)
-                        ->retriveId('Node');
+                        ->getId('Node');
         }
     }
 
