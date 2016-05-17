@@ -12,7 +12,7 @@ trait PrepareQueryTrait
     {
         $tableData = $this->tableNames[ $this->mainTable ];
 
-        $this->query = $this->qb->table($this->qb->raw($tableData['table'].' as '.$tableData['as']));
+        $this->query = $this->qb->table([$tableData['table'] => $tableData['as']]);
         $this->queryTables[$tableData['as']] = true;
     }
 
@@ -26,25 +26,25 @@ trait PrepareQueryTrait
 
     private function setQueryJoins($joinsTable)
     {
-        $tableA = $this->tableNames[ $this->mainTable ]['as'];
+        $tableA = $this->tableNames[ $this->mainTable ];
 
         foreach ($joinsTable as $tableName)
         {
             $tableB = $this->tableNames[$tableName];
-            if (isset($this->joinKeys[$tableA][$tableB]))
+            if (isset($this->joinKeys[ $tableA['as'] ][ $tableB['as'] ]))
             {
-                $joinProps = $this->joinKeys[$tableA][$tableB];
+                $joinProps = $this->joinKeys[ $tableA['as'] ][ $tableB['as'] ];
                 $this->query->join(
-                    $this->qb->raw($tableB['table'].' as '.$tableB['as']),
-                    $joinProps[0],
-                    $joinProps[1],
-                    $joinProps[2]
+                    [$tableB['table'] => $tableB['as']],
+                    $tableA['as'].'.'.$joinProps[0],
+                    '=',
+                    $tableB['as'].'.'.$joinProps[1]
                 );
                 $this->queryTables[ $tableB['as'] ] = true;
             }
             else
             {
-                $this->errorLog->errorLog('Unable to Join '.$tableA.' and '.$tableB.'.');
+                $this->errorLog->errorLog('Unable to Join '.$tableA['as'].' and '.$tableB['as'].'.');
                 return false;
             }
 
@@ -67,7 +67,7 @@ trait PrepareQueryTrait
                     break;
                 }
             }
-            $this->query->where($valueColumn, $value);
+            $this->query->where($table.'.'.$valueColumn, $value);
         }
 
     }
@@ -79,10 +79,8 @@ trait PrepareQueryTrait
 
         $this->prepareLinkDefinitions();
 
-        foreach ($this->structDefinitionVariables as $varName => $varProperties)
+        foreach ($this->structDefinitionTableColumns as $varName => $varProperties)
         {
-            // var_dump($varName);
-            // var_dump($this->structDefinition->$varName);
             if ($this->structDefinition->$varName === false)
             {
                 continue;
@@ -90,7 +88,7 @@ trait PrepareQueryTrait
 
             $variable = $this->structDefinition->$varName;
 
-            $table = each($varProperties['table']);
+            $table = each($varProperties);
             $tableName = $table['key'];
             $tableVariableName = $table['value'];
 
@@ -110,7 +108,7 @@ trait PrepareQueryTrait
 
     private function queryTryJoin($tableName, $tableVariableName, $variable)
     {
-        if (isset($this->joinsMade[ $tableName ]))
+        if (isset($this->queryTables[ $tableName ]))
         {
             return true;
         }
@@ -141,7 +139,6 @@ trait PrepareQueryTrait
                 $this->tableNames[$rightTableName].'.'.$joinKeys[1]
             );
 
-            $this->joinsMade[$rightTableName] = true;
             $this->queryTables[$rightTableName] = true;
 
             $leftTableName = $rightTableName;

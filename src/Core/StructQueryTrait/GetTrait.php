@@ -17,13 +17,14 @@ trait GetTrait
 
     private function selectGetColumns()
     {
+        // no i kurka nie ma tej tablicy
         foreach ($this->joinColumnSelects[ $this->mainTable ] as $getTable => $getColumns)
         {
             if (isset($this->queryTables[ $getTable ]))
             {
                 foreach ($getColumns as $columnName => $asName)
                 {
-                    $this->query->select($this->qb->raw($getTable.'.'.$columnName.' as '.$asName));
+                    $this->query->select([$getTable.'.'.$columnName => $asName]);
                 }
             }
         }

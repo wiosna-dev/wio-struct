@@ -24,7 +24,7 @@ trait AddTrait
                 $this->joinlessSetQueryTable();
                 $idInserted = $this->query->insert($values);
 
-                if ($mainTableName == 'Node')
+                if ($this->mainTable == 'Node')
                 {
                     $this->structDefinition->nodeId($idInserted);
                 }
@@ -32,7 +32,7 @@ trait AddTrait
         }
         else
         {
-            $this->errorLog->errorLog('We already have "'.print_r($value0,true).'" in table '.$mainTableName.'.');
+            $this->errorLog->errorLog('We already have "'.print_r($value0,true).'" in table '.$this->mainTable.'.');
         }
 
         return $this;

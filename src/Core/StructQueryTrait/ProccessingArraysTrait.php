@@ -69,18 +69,18 @@ trait ProccessingArraysTrait
 
     private $joinKeys = [
         'Node' => [
-          'NodeType' => ['Node','node_type_id','NodeType','id'],
-          'Flag' => ['Flag','node_id','Node','id']
+          'NodeType' => ['node_type_id','id'],
+          'Flag' => ['id','node_id']
         ],
         'NodeType' => [
-            'Network' => ['NodeType','network_id','Network','id']
+            'Network' => ['network_id','id']
         ],
         'Flag' => [
-            'Node' => ['Flag','node_id','Node','id'],
-            'FlagType' => ['Flag','flag_type_id','FlagType','id']
+            'Node' => ['node_id','id'],
+            'FlagType' => ['flag_type_id','id']
         ],
         'FlagType' => [
-            'Flag' => ['Flag','flag_type_id','FlagType','id']
+            'Flag' => ['id','flag_type_id']
         ]
     ];
 

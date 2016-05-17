@@ -37,7 +37,7 @@ $wioStruct->structQuery($administrativeDef)
 $szpNetworkId = $wioStruct->structQuery(
     (new StructDefinition)
         ->networkName('Szlachetna Paczka')
-    )->first('Network','id');
+    )->getId('Network');
 
 $wioStruct->structQuery(
     (new StructDefinition)

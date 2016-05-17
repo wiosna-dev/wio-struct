@@ -31,7 +31,7 @@ trait GetIdTrait
 
             $this->setQueryValues($gettingId['values']);
 
-            $this->query->select($this->tableNames[ $this->mainTable ]['table'].'.id');
+            $this->query->select($this->mainTable.'.id');
 
             $answer = $this->query->first();
 
