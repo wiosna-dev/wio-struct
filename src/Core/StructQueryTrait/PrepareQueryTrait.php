@@ -3,90 +3,43 @@ namespace WioStruct\Core\StructQueryTrait;
 
 trait PrepareQueryTrait
 {
+    private $tablePrefix = '';
+    private $currentStrDef;
 
-    private $joinsMade = [];
-
-    private $queryTables = [];
-
-    private function setQueryTable()
+    private function prepareQuery($tablePrefix = '', $currentStrDef = false)
     {
-        $tableData = $this->tableNames[ $this->mainTable ];
+        $this->tablePrefix = $tablePrefix;
 
-        $this->query = $this->qb->table([$tableData['table'] => $tableData['as']]);
-        $this->queryTables[$tableData['as']] = true;
-    }
-
-    private function joinlessSetQueryTable()
-    {
-        $tableData = $this->tableNames[ $this->mainTable ];
-
-        $this->query = $this->qb->table($tableData['table']);
-        $this->queryTables[$tableData['as']] = true;
-    }
-
-    private function setQueryJoins($joinsTable)
-    {
-        $tableA = $this->tableNames[ $this->mainTable ];
-
-        foreach ($joinsTable as $tableName)
+        if ($currentStrDef)
         {
-            $tableB = $this->tableNames[$tableName];
-            if (isset($this->joinKeys[ $tableA['as'] ][ $tableB['as'] ]))
-            {
-                $joinProps = $this->joinKeys[ $tableA['as'] ][ $tableB['as'] ];
-                $this->query->join(
-                    [$tableB['table'] => $tableB['as']],
-                    $tableA['as'].'.'.$joinProps[0],
-                    '=',
-                    $tableB['as'].'.'.$joinProps[1]
-                );
-                $this->queryTables[ $tableB['as'] ] = true;
-            }
-            else
-            {
-                $this->errorLog->errorLog('Unable to Join '.$tableA['as'].' and '.$tableB['as'].'.');
-                return false;
-            }
-
-            $tableA = $tableB;
+            $this->currentStrDef = $currentStrDef;
         }
-    }
-
-    private function setQueryValues($values)
-    {
-        foreach ($values as $valueName)
+        else
         {
-            $value = $this->structDefinition->$valueName;
-
-            $valueColumn = -221;
-            foreach ($this->structDefinitionTableColumns[$valueName] as $table => $column)
-            {
-                if (isset($this->queryTables[$table]))
-                {
-                    $valueColumn = $column;
-                    break;
-                }
-            }
-            $this->query->where($table.'.'.$valueColumn, $value);
+            $this->currentStrDef = $this->structDefinition;
         }
 
+        if ($this->tablePrefix == '')
+        {
+            $this->setQueryTable();
+        }
+
+        $this->addSimpleStructDefinitionValues();
+
+        $this->addAdvancedStructDefinitionValues();
     }
 
 
-    private function prepareQuery()
+    private function addSimpleStructDefinitionValues()
     {
-        $this->setQueryTable();
-
-        $this->prepareLinkDefinitions();
-
-        foreach ($this->structDefinitionTableColumns as $varName => $varProperties)
+        foreach ($this->structDefinitionValues as $varName => $varProperties)
         {
-            if ($this->structDefinition->$varName === false)
+            if ($this->currentStrDef->$varName === false)
             {
                 continue;
             }
 
-            $variable = $this->structDefinition->$varName;
+            $variable = $this->currentStrDef->$varName;
 
             $table = each($varProperties);
             $tableName = $table['key'];
@@ -94,21 +47,22 @@ trait PrepareQueryTrait
 
             if ($tableName == $this->mainTable)
             {
-                $this->query->where($this->tableNames[$tableName].'.'.$tableVariableName,$variable);
+                $this->query->where($this->tablePrefix.$this->tableNames[$tableName]['as'].'.'.$tableVariableName, $variable);
             }
             else
             {
-                if ($this->queryTryJoin($tableName, $tableVariableName, $variable))
+                if ($this->tryQueryJoin($tableName, $tableVariableName, $variable))
                 {
-                    $this->query->where($this->tableNames[$tableName].'.'.$tableVariableName, $variable);
+                    $this->query->where($this->tablePrefix.$this->tableNames[$tableName]['as'].'.'.$tableVariableName, $variable);
                 }
             }
         }
+
     }
 
-    private function queryTryJoin($tableName, $tableVariableName, $variable)
+    private function tryQueryJoin($tableName, $tableVariableName, $variable)
     {
-        if (isset($this->queryTables[ $tableName ]))
+        if (isset($this->queryTables[ $this->tablePrefix.$tableName ]))
         {
             return true;
         }
@@ -132,83 +86,62 @@ trait PrepareQueryTrait
         $leftTableName = $this->mainTable;
         foreach ($joinData as $rightTableName=>$joinKeys)
         {
+            $tableA = $this->tableNames[$leftTableName];
+            $tableB = $this->tableNames[$rightTableName];
             $this->query->join(
-                $this->tableNames[$rightTableName],
-                $this->tableNames[$leftTableName].'.'.$joinKeys[0],
+                [ $tableB['table'] => $this->tablePrefix.$tableB['as'] ],
+                $tableA['as'].'.'.$joinKeys[0],
                 '=',
-                $this->tableNames[$rightTableName].'.'.$joinKeys[1]
+                $tableB['as'].'.'.$joinKeys[1]
             );
 
-            $this->queryTables[$rightTableName] = true;
+            $this->queryTables[$this->tablePrefix.$rightTableName] = true;
 
             $leftTableName = $rightTableName;
         }
     }
 
-
-
-    private function prepareLinkDefinitions()
+    private function addAdvancedStructDefinitionValues()
     {
-        $toCheck =
-        [
-            'linkParent'   => 'parent',
-            'linkChildren' => 'children'
-        ];
-        $toRetrieve =
-        [
-            'networkId'    => 'NetworkId',
-            'networkName'  => 'NetworkName',
-            'nodeTypeId'   => 'NodeTypeId',
-            'nodeTypeName' => 'NodeTypeName',
-            'nodeId'       => 'NodeId',
-            'nodeName'     => 'NodeName',
-            'flagTypeId'   => 'FlagTypeId',
-            'flagTypeName' => 'FlagTypeName'
-        ];
-
-        foreach ($toCheck as $variable => $prefix)
+        foreach ($this->structDefinitionAdvancedValues as $varName => $varTab)
         {
-            $struct = $this->structDefinition->$variable;
-            if ($struct)
+            if ($this->currentStrDef->$varName === false)
             {
-                foreach ($toRetrieve as $name => $newName)
-                {
-                    if ($struct->$name)
-                    {
-                        $nameWithPrefix = $prefix.$newName;
-                        $this->structDefinition->$nameWithPrefix = $struct->$name;
-                    }
-                }
+                continue;
             }
+
+            $newStrDef = $this->structDefinition->$varName;
+
+            $newPrefix = $varTab['Prefix'].$this->tablePrefix;
+
+            $tableLink = $this->tableNames['Link'];
+            $tableNode = $this->tableNames['Node'];
+
+            $this->query->join(
+                [ $tableLink['table'] => $newPrefix.$tableLink['as'] ],
+                $this->tablePrefix.$tableNode['as'].'.id',
+                '=',
+                $newPrefix.$tableLink['as'].'.'.$varTab['Node1']
+            );
+            $this->queryTables[$newPrefix.'Link'] = true;
+
+            $this->query->join(
+                [ $tableNode['table'] => $newPrefix.$tableNode['as'] ],
+                $newPrefix.$tableNode['as'].'.id',
+                '=',
+                $newPrefix.$tableLink['as'].'.'.$varTab['Node2']
+            );
+            $this->queryTables[$newPrefix.'Node'] = true;
+
+
+            $oldPrefix = $this->tablePrefix;
+            $oldStrDef = $this->currentStrDef;
+
+            $this->prepareQuery($newPrefix, $newStrDef);
+
+            $this->tablePrefix = $oldPrefix;
+            $this->currentStrDef = $oldStrDef;
+
         }
     }
 }
-
-/*
-SELECT
-  Nodes.`id` as NodeId,
-  Nodes.`name` as NodeName,
-  Nodes.`lat` as NodeLat,
-  Nodes.`lng` as NodeLng,
-  NodeTypes.`name` as NodeType,
-  Networks.`name` as Network
-FROM `wio_struct_nodes` as Nodes
-  INNER JOIN `wio_struct_node_types` as NodeTypes
-    ON Nodes.`node_type_id` = NodeTypes.`id`
-  INNER JOIN `wio_struct_networks` as Networks
-    ON NodeTypes.`network_id` = Networks.`id`
-  INNER JOIN `wio_struct_links` as Links
-  	ON Nodes.`id` = Links.`node_children_id`
-  INNER JOIN `wio_struct_nodes` as ParentNodes
-  	ON ParentNodes.`id` = Links.`node_parent_id`
-  INNER JOIN `wio_struct_node_types` as ParentNodeTypes
-  	ON ParentNodeTypes.`id` = ParentNodes.`node_type_id`
-  INNER JOIN `wio_struct_networks` as ParentNetworks
-  	ON ParentNetworks.`id` = ParentNodeTypes.`network_id`
-WHERE Networks.name = 'administrative'
-  AND NodeTypes.name = 'city'
-  AND ParentNodes.name = 'Śląsk'
-  AND ParentNodeTypes.name = 'state'
-  AND ParentNetworks.name = 'administrative'
-
-*/

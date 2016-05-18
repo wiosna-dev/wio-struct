@@ -9,16 +9,15 @@ trait GetTrait
         $this->mainTable = $mainTable;
         $this->prepareQuery();
 
-        $this->selectGetColumns();
+        $this->getColumnsSelects();
 
         $answer = $this->query->get();
         return $answer;
     }
 
-    private function selectGetColumns()
+    private function getColumnsSelects()
     {
-        // no i kurka nie ma tej tablicy
-        foreach ($this->joinColumnSelects[ $this->mainTable ] as $getTable => $getColumns)
+        foreach ($this->getColumns[ $this->mainTable ] as $getTable => $getColumns)
         {
             if (isset($this->queryTables[ $getTable ]))
             {

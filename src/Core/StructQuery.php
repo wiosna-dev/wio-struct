@@ -6,7 +6,10 @@ class StructQuery
     use StructQueryTrait\AddTrait;
     use StructQueryTrait\GetTrait;
     use StructQueryTrait\GetIdTrait;
+
+    use StructQueryTrait\SetQueryTrait;
     use StructQueryTrait\PrepareQueryTrait;
+
     use StructQueryTrait\ProccessingArraysTrait;
 
     private $structDefinition;

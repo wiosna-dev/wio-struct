@@ -7,7 +7,7 @@ require_once('exampleEnvironment.php');
 
 echo '<!doctype HTML><html><head><meta charset="utf-8"></head><body>';
 
-//*
+
 #
 # Setting NETWORKS
 #
@@ -261,7 +261,7 @@ $szkoly = $wioStruct->structQuery(
 
 tab_dump($szkoly);
 
-// */
+
 
 $szkoly = $wioStruct->structQuery(
     (new StructDefinition)

@@ -3,7 +3,8 @@ namespace WioStruct\Core\StructQueryTrait;
 
 trait ProccessingArraysTrait
 {
-    private $tableNames = [
+    private $tableNames =
+    [
         'Network' => [
             'table' => 'wio_struct_networks',
             'as' => 'Network'
@@ -24,6 +25,10 @@ trait ProccessingArraysTrait
             'table' => 'wio_struct_flag_types',
             'as' => 'FlagType'
         ],
+        'Link' => [
+            'table' => 'wio_struct_links',
+            'as' => 'Link'
+        ],
         'LinkParent' => [
             'table' => 'wio_struct_links',
             'as' => 'LinkParent'
@@ -34,7 +39,9 @@ trait ProccessingArraysTrait
         ]
     ];
 
-    private $structDefinitionTableColumns = [
+    // used by StructQuery->addSimpleStructDefinitionValues
+    private $structDefinitionValues =
+    [
         'networkId' => [
             'Network' => 'id',
             'NodeType' => 'netowrk_id'
@@ -67,7 +74,24 @@ trait ProccessingArraysTrait
         ]
     ];
 
-    private $joinKeys = [
+    // used by StructQuery->addAdvancedStructDefinitionValues
+    private $structDefinitionAdvancedValues =
+    [
+        'linkParent' => [
+            'Prefix' => 'Parent',
+            'Node1' => 'node_children_id',
+            'Node2' => 'node_parent_id'
+        ],
+        'linkChildren' => [
+            'Prefix' => 'Children',
+            'Node1' => 'node_parent_id',
+            'Node2' => 'node_children_id'
+        ]
+    ];
+
+    // used by StructQuery->setQueryJoins
+    private $joinKeys =
+    [
         'Node' => [
           'NodeType' => ['node_type_id','id'],
           'Flag' => ['id','node_id']
@@ -84,7 +108,9 @@ trait ProccessingArraysTrait
         ]
     ];
 
-    private $tableColumns = [
+    // Noone use that?
+    private $tableColumns =
+    [
         'Network' => [
             0 => 'name'
         ],
@@ -125,7 +151,9 @@ trait ProccessingArraysTrait
         ]
     ];
 
-    private $addingTableSettings = [
+    // used by StructQuery->add
+    private $addingTableSettings =
+    [
         'Network' => [
             'columns' => ['name'=>0],
             'check' => ['name']
@@ -161,7 +189,10 @@ trait ProccessingArraysTrait
         ]
     ];
 
-    private $getColumns = [
+
+    // used by StructQuery->get => StructQuery->getColumnsSelects
+    private $getColumns =
+    [
         'Node' => [
             'Node' => [
                 'id' => 'NodeId',
@@ -184,10 +215,11 @@ trait ProccessingArraysTrait
         ]
     ];
 
-
+    // used by StructQuery->getId
     private $gettingIds =
     [
-        'Network' => [
+        'Network' =>
+        [
             [
                 'values' => ['networkId'],
                 'table'  => false,
@@ -197,7 +229,8 @@ trait ProccessingArraysTrait
                 'table'  => 'Network'
             ]
         ],
-        'FlagType' => [
+        'FlagType' =>
+        [
             [
                 'values' => ['flagTypeId'],
                 'table'  => false,
@@ -207,7 +240,8 @@ trait ProccessingArraysTrait
                 'table'  => 'FlagType'
             ]
         ],
-        'NodeType' => [
+        'NodeType' =>
+        [
             [
                 'values' => ['nodeTypeId'],
                 'table'  => false,
@@ -222,7 +256,8 @@ trait ProccessingArraysTrait
                 'join'   => ['Network']
             ]
         ],
-        'Node' => [
+        'Node' =>
+        [
             [
                 'values' => ['nodeId'],
                 'table'  => false,
@@ -242,5 +277,42 @@ trait ProccessingArraysTrait
                 'join'   => ['NodeType','Network']
             ]
         ]
+    ];
+
+    // used by StructQuery->tryQueryJoin adn StructQuery->queryJoin
+    private $possibleJoins = [
+        'Node' => [
+            'NodeType' => [
+                'NodeType' => ['node_type_id','id']
+            ],
+            'Network' => [
+                'NodeType' => ['node_type_id','id'],
+                'Network' => ['network_id','id']
+            ],
+            'FlagType' => [
+                'Flag' => ['id','node_id'],
+                'FlagType' => ['flag_type_id','id'],
+            ]
+
+        ],
+        'NodeType' => [
+            'Network' => [
+                'Network' => ['network_id','id']
+            ]
+        ],
+        'LinkParent' => [
+            'Node' => [
+                'Node' => ['node_parent_id','id']
+            ],
+            'NodeType' => [
+                'Node' => ['node_parent_id','id'],
+                'NodeType' => ['node_type_id','id']
+            ],
+            'Network' => [
+                'Node' => ['node_parent_id','id'],
+                'NodeType' => ['node_type_id','id'],
+                'Network' => ['network_id','id']
+            ]
+        ],
     ];
 }
