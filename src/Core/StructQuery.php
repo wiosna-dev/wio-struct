@@ -9,6 +9,7 @@ class StructQuery
 
     use StructQueryTrait\SetQueryTrait;
     use StructQueryTrait\PrepareQueryTrait;
+    use StructQueryTrait\LinksPrepareTrait;
 
     use StructQueryTrait\ProccessingArraysTrait;
 

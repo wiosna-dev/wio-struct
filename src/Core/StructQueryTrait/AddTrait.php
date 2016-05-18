@@ -28,6 +28,10 @@ trait AddTrait
                 {
                     $this->structDefinition->nodeId($idInserted);
                 }
+                if ($this->mainTable == 'LinkParent' or $this->mainTable == 'LinkChildren')
+                {
+                    $this->LinksPrepare($values['node_parent_id'],$values['node_children_id']);
+                }
             }
         }
         else
