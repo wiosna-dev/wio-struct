@@ -232,7 +232,7 @@ $schoolAdder->add('Node','SP nr 7')
 $schoolAdder->add('Node','SP nr 11')
     ->add('LinkParent',
         (new StructDefinition)
-          ->nodeTypeId($cityTypeId)
+            ->nodeTypeId($cityTypeId)
             ->nodeName('Kraków')
     );
 
