@@ -3,6 +3,7 @@ namespace WioStruct;
 
 use \WioStruct\ErrorLog\ErrorLog;
 use \WioStruct\Core\StructQuery;
+use \WioStruct\Core\StructLink;
 class WioStruct
 {
 
@@ -19,6 +20,11 @@ class WioStruct
     public function structQuery(\WioStruct\Core\StructDefinition $structDefinition)
     {
         return new StructQuery($structDefinition, $this->errorLog, $this->qb);
+    }
+
+    public function structLink()
+    {
+        return new StructLink($this->errorLog, $this->qb);
     }
 
 }
