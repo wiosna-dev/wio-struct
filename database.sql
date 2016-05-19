@@ -1,0 +1,39 @@
+CREATE TABLE `wio_struct_networks` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT ,
+    `name` VARCHAR(64) NOT NULL ,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+CREATE TABLE `wio_struct_node_types` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT ,
+    `network_id` INT(11) NOT NULL ,
+    `name` VARCHAR(64) NOT NULL ,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+CREATE TABLE `wio_struct_nodes` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT ,
+    `node_type_id` INT(11) NOT NULL ,
+    `name` VARCHAR(64) NOT NULL ,
+    `lat` FLOAT( 10, 6 ) NOT NULL ,
+    `lng` FLOAT( 10, 6 ) NOT NULL ,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+CREATE TABLE `wio_struct_links` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT ,
+    `node_parent_id` INT(11) NOT NULL ,
+    `node_children_id` INT(11) NOT NULL ,
+    `auto_generated` INT(3) NOT NULL ,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+CREATE TABLE `wio_struct_flag_types` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT ,
+    `name` VARCHAR(64) NOT NULL ,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+CREATE TABLE `wio_struct_flags` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT ,
+    `node_id` INT (11) NOT NULL ,
+    `flag_type_id` INT(11) NOT NULL ,
+    `flag_data` VARCHAR(255) NOT NULL ,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+INSERT INTO `wio_struct_networks`(name) VALUES ("administrative");
