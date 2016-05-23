@@ -11,6 +11,8 @@ class StructDefinition
     public $nodeId;
     public $flagTypeName;
     public $flagTypeId;
+    public $nodeLat;
+    public $nodeLng;
     public $linkParent;
     public $linkChildren;
 
@@ -22,6 +24,8 @@ class StructDefinition
         $this->nodeTypeName = false;
         $this->nodeId = false;
         $this->nodeName = false;
+        $this->nodeLat = false;
+        $this->nodeLng = false;
         $this->flagTypeId = false;
         $this->flagTypeName = false;
         $this->linkParent = false;
@@ -39,7 +43,9 @@ class StructDefinition
         ],
         'Node' => [
             'id' => 'nodeId',
-            'name' => 'nodeName'
+            'name' => 'nodeName',
+            'lat' => 'nodeLat',
+            'lng' => 'nodeLng'
         ],
         'FlagType' => [
             'id' => 'flagTypeId',
@@ -99,6 +105,13 @@ class StructDefinition
         return $this;
     }
 
+    public function nodeLatLng($lat,$lng)
+    {
+        $this->nodeLat = $lat;
+        $this->nodeLng = $lng;
+        return $this;
+    }
+
     public function flagTypeId($id)
     {
       $this->flagTypeId = $id;
@@ -111,13 +124,13 @@ class StructDefinition
         return $this;
     }
 
-    public function linkParent(StructDefinition $nodeDef)
+    public function linkParent($nodeDef)
     {
         $this->linkParent = $nodeDef;
         return $this;
     }
 
-    public function linkChildren(StructDefinition $nodeDef)
+    public function linkChildren($nodeDef)
     {
         $this->linkChildren = $nodeDef;
         return $this;

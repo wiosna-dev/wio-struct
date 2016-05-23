@@ -110,38 +110,66 @@ trait PrepareQueryTrait
                 continue;
             }
 
-            $newStrDef = $this->structDefinition->$varName;
+            if (is_numeric($this->currentStrDef->$varName))
+            {
+                $this->addLinkAsId($varName,$this->currentStrDef->$varName);
+                continue;
+            }
 
-            $newPrefix = $varTab['Prefix'].$this->tablePrefix;
-
-            $tableLink = $this->tableNames['Link'];
-            $tableNode = $this->tableNames['Node'];
-
-            $this->query->join(
-                [ $tableLink['table'] => $newPrefix.$tableLink['as'] ],
-                $this->tablePrefix.$tableNode['as'].'.id',
-                '=',
-                $newPrefix.$tableLink['as'].'.'.$varTab['Node1']
-            );
-            $this->queryTables[$newPrefix.'Link'] = true;
-
-            $this->query->join(
-                [ $tableNode['table'] => $newPrefix.$tableNode['as'] ],
-                $newPrefix.$tableNode['as'].'.id',
-                '=',
-                $newPrefix.$tableLink['as'].'.'.$varTab['Node2']
-            );
-            $this->queryTables[$newPrefix.'Node'] = true;
-
-
-            $oldPrefix = $this->tablePrefix;
-            $oldStrDef = $this->currentStrDef;
-
-            $this->prepareQuery($newPrefix, $newStrDef);
-
-            $this->tablePrefix = $oldPrefix;
-            $this->currentStrDef = $oldStrDef;
-
+            $this->addLinkAsStructure($varName,$varTab);
         }
+    }
+
+    private function addLinkAsId($varName,$id)
+    {
+        $newPrefix = $varTab['Prefix'].$this->tablePrefix;
+
+        $tableLink = $this->tableNames['Link'];
+        $tableNode = $this->tableNames['Node'];
+
+        $this->query->join(
+            [ $tableLink['table'] => $newPrefix.$tableLink['as'] ],
+            $this->tablePrefix.$tableNode['as'].'.id',
+            '=',
+            $newPrefix.$tableLink['as'].'.'.$varTab['Node1']
+        );
+        $this->queryTables[$newPrefix.'Link'] = true;
+
+        $this->query->where($newPrefix.$tableLink['as'].'.'.$varTab['Node1'],$id);
+    }
+
+    private function addLinkAsStructure($varName,$varTab)
+    {
+        $newStrDef = $this->structDefinition->$varName;
+
+        $newPrefix = $varTab['Prefix'].$this->tablePrefix;
+
+        $tableLink = $this->tableNames['Link'];
+        $tableNode = $this->tableNames['Node'];
+
+        $this->query->join(
+            [ $tableLink['table'] => $newPrefix.$tableLink['as'] ],
+            $this->tablePrefix.$tableNode['as'].'.id',
+            '=',
+            $newPrefix.$tableLink['as'].'.'.$varTab['Node1']
+        );
+        $this->queryTables[$newPrefix.'Link'] = true;
+
+        $this->query->join(
+            [ $tableNode['table'] => $newPrefix.$tableNode['as'] ],
+            $newPrefix.$tableNode['as'].'.id',
+            '=',
+            $newPrefix.$tableLink['as'].'.'.$varTab['Node2']
+        );
+        $this->queryTables[$newPrefix.'Node'] = true;
+
+
+        $oldPrefix = $this->tablePrefix;
+        $oldStrDef = $this->currentStrDef;
+
+        $this->prepareQuery($newPrefix, $newStrDef);
+
+        $this->tablePrefix = $oldPrefix;
+        $this->currentStrDef = $oldStrDef;
     }
 }

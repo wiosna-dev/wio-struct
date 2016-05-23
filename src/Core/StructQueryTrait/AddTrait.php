@@ -4,7 +4,7 @@ namespace WioStruct\Core\StructQueryTrait;
 trait AddTrait
 {
 
-    public function add($mainTable, $value0, $value1 = false, $value2 = false)
+    public function add($mainTable, $value0, $value1 = 0, $value2 = 0)
     {
         $this->mainTable = $mainTable;
         $values = [$value0, $value1, $value2];

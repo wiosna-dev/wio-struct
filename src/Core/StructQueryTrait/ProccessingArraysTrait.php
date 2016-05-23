@@ -44,7 +44,7 @@ trait ProccessingArraysTrait
     [
         'networkId' => [
             'Network' => 'id',
-            'NodeType' => 'netowrk_id'
+            'NodeType' => 'network_id'
         ],
         'networkName' => [
             'Network' => 'name'
@@ -64,6 +64,12 @@ trait ProccessingArraysTrait
         ],
         'nodeName' => [
             'Node' => 'name',
+        ],
+        'nodeLat' => [
+            'Node' => 'lat'
+        ],
+        'nodeLng' => [
+            'Node' => 'lng'
         ],
         'flagTypeId' => [
             'FlagType' => 'id',
@@ -108,49 +114,6 @@ trait ProccessingArraysTrait
         ]
     ];
 
-    // Noone use that?
-    private $tableColumns =
-    [
-        'Network' => [
-            0 => 'name'
-        ],
-        'NodeType' => [
-            0 => 'name',
-            'required' => [
-                'Network' => 'network_id'
-            ]
-        ],
-        'Node' => [
-            0 => 'name',
-            1 => 'lat',
-            2 => 'lng',
-            'required' => [
-                'NodeType' => 'node_type_id'
-            ]
-        ],
-        'FlagType' => [
-            0 => 'name'
-        ],
-        'Flag' => [
-            0 => 'flag_data',
-            'required' => [
-                'FlagType' => 'flag_type_id'
-            ]
-        ],
-        'LinkParent' => [
-            0 => 'node_parent_id',
-            'required' => [
-                'Node' => 'node_children_id'
-            ]
-        ],
-        'LinkChildren' => [
-            0 => 'node_children_id',
-            'required' => [
-                'Node' => 'node_parent_id'
-            ]
-        ]
-    ];
-
     // used by StructQuery->add
     private $addingTableSettings =
     [
@@ -170,7 +133,7 @@ trait ProccessingArraysTrait
         'Node' => [
             'requireId' => 'NodeType',
             'columns' => ['node_type_id'=>'requiredId', 'name'=>0, 'lat'=>1, 'lng'=>2],
-            'check' => ['node_type_id','name']
+            'check' => ['node_type_id','name','lat','lng']
         ],
         'Flag' => [
             'requireId' => 'Node',
@@ -211,7 +174,22 @@ trait ProccessingArraysTrait
             ],
             'FlagType' => [
                 'name' => 'FlagType'
+            ],
+            'ParentNode' => [
+                'id' => 'ParentNodeId',
+                'name' => 'ParentNodeName'
+            ],
+            'ChildrenNode' => [
+                'id' => 'ChildrenNodeId',
+                'name' => 'ChildrenNodeName'
             ]
+        ],
+        'NodeType' => [
+            'NodeType' => [
+                'id'  => 'NodeTypeId',
+                'network_id'  => 'NodeTypeNetwork',
+                'name' => 'NodeType',
+            ],
         ]
     ];
 
