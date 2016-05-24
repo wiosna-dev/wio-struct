@@ -179,9 +179,25 @@ trait ProccessingArraysTrait
                 'id' => 'ParentNodeId',
                 'name' => 'ParentNodeName'
             ],
+            'ParentNodeType' => [
+                'id' => 'ParentNodeTypeId',
+                'name' => 'ParentNodeTypeName'
+            ],
+            'ParentNetwork' => [
+                'id' => 'ParentNetworkId',
+                'name' => 'ParentNetworkName'
+            ],
             'ChildrenNode' => [
                 'id' => 'ChildrenNodeId',
                 'name' => 'ChildrenNodeName'
+            ],
+            'ChildrenNodeType' => [
+                'id' => 'ChildrenNodeTypeId',
+                'name' => 'ChildrenNodeTypeName'
+            ],
+            'ChildrenNetwork' => [
+                'id' => 'ChildrenNetworkId',
+                'name' => 'ChildrenNetworkName'              
             ]
         ],
         'NodeType' => [

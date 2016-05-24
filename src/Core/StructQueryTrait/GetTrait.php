@@ -11,6 +11,8 @@ trait GetTrait
 
         $this->getColumnsSelects();
 
+        $this->printQuery();
+
         $answer = $this->query->get();
         return $answer;
     }
