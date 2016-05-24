@@ -187,9 +187,19 @@ trait ProccessingArraysTrait
         'NodeType' => [
             'NodeType' => [
                 'id'  => 'NodeTypeId',
-                'network_id'  => 'NodeTypeNetwork',
+                'network_id'  => 'NodeTypeNetworkId',
                 'name' => 'NodeType',
             ],
+            'Network' => [
+                'id' => 'NetworkId',
+                'name' => 'NetworkName'
+            ]
+        ],
+        'Network' => [
+            'Network' => [
+                'id' => 'NetworkId',
+                'name' => 'NetworkName'
+            ]
         ]
     ];
 
