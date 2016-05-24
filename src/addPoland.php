@@ -632,7 +632,7 @@ foreach ($map as $wojNazwa => $wojData)
 $powiaty = $wioStruct->structQuery(
     (new StructDefinition)
         ->networkName('administrative')
-        ->nodeTypeName('powiat_ziemski')
+        ->nodeTypeName('state')
     )->get('Node');
 
 tab_dump($powiaty);

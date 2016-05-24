@@ -90,9 +90,9 @@ trait PrepareQueryTrait
             $tableB = $this->tableNames[$rightTableName];
             $this->query->join(
                 [ $tableB['table'] => $this->tablePrefix.$tableB['as'] ],
-                $tableA['as'].'.'.$joinKeys[0],
+                $this->tablePrefix.$tableA['as'].'.'.$joinKeys[0],
                 '=',
-                $tableB['as'].'.'.$joinKeys[1]
+                $this->tablePrefix.$tableB['as'].'.'.$joinKeys[1]
             );
 
             $this->queryTables[$this->tablePrefix.$rightTableName] = true;
