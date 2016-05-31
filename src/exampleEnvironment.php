@@ -42,7 +42,7 @@ function tab_dump($array, $name = false)
     echo '<div class="tab_dump"><table class="tab_dump">';
     if ($name)
     {
-        echo '<tr><th colspan="99999">'.$name.'</th></tr>';
+        echo '<tr><th colspan="999">'.$name.'</th></tr>';
     }
     echo '<tr>'.$head.'</tr>'.$html.'</table></div>';
 }
