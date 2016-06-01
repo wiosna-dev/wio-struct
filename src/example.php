@@ -275,6 +275,7 @@ $szkoly = $wioStruct->structQuery(
         )
     )->get('Node');
 
+
 tab_dump($szkoly);
 
 dump_database($qb);

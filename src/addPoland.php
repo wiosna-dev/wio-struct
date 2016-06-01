@@ -53,8 +53,8 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Bydgoszcz',0,0],
-            ['Toruń',0,0],
+            ['Bydgoszcz',53.1184692552,18.0181604004],
+            ['Toruń',53.0119175901,18.5975175476],
             ['Włocławek',0,0],
             ['Grudziądz',0,0]
         ],
@@ -62,7 +62,7 @@ $map =
         [
             'aleksandrowski' => ['Aleksandrów Kujawski',0,0],
             'brodnicki' => ['Brodnica',0,0],
-            'bydgoski' => ['Bydgoszcz',0,0],
+            'bydgoski' => ['Bydgoszcz',53.1184692552,18.0181604004],
             'chełmiński' => ['Chełmno',0,0],
             'golubsko-dobrzyński' => ['Golub-Dobrzyń',0,0],
             'grudziądzki' => ['Grudziądz',0,0],
@@ -74,7 +74,7 @@ $map =
             'rypiński' => ['Rypin',0,0],
             'sępoleński' => ['Sępólno Krajeńskie',0,0],
             'świecki' => ['Świecie',0,0],
-            'toruński' => ['Toruń',0,0],
+            'toruński' => ['Toruń',53.0119175901,18.5975175476],
             'tucholski' => ['Tuchola',0,0],
             'wąbrzeski' => ['Wąbrzeźno',0,0],
             'włocławski' => ['Włocławek',0,0],
@@ -174,7 +174,7 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Kraków',0,0],
+            ['Kraków',50.0605443,19.9417183],
             ['Nowy Sącz',0,0],
             ['Tarnów',0,0]
         ],
@@ -205,7 +205,7 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Warszawa',0,0],
+            ['Warszawa',52.2343398678,21.0057550048],
             ['Ostrołęka',0,0],
             ['Płock',0,0],
             ['Radom',0,0],

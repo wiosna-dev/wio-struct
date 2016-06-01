@@ -197,7 +197,7 @@ trait ProccessingArraysTrait
             ],
             'ChildrenNetwork' => [
                 'id' => 'ChildrenNetworkId',
-                'name' => 'ChildrenNetworkName'              
+                'name' => 'ChildrenNetworkName'
             ]
         ],
         'NodeType' => [
