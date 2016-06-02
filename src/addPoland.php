@@ -14,9 +14,9 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Wrocław',0,0],
+            ['Wrocław',51.1079,17.0385],
             ['Jelenia Góra',0,0],
-            ['Legnica',0,0],
+            ['Legnica',51.207,16.1553],
             ['Wałbrzych',0,0]
         ],
         'powiat_ziemski'=>
@@ -85,8 +85,8 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Lublin',0,0],
-            ['Biała Podlaska',0,0],
+            ['Lublin',51.2465,22.5684],
+            ['Biała Podlaska',52.0387,23.1445],
             ['Chełm',0,0],
             ['Zamość',0,0]
         ],
@@ -118,8 +118,8 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Gorzów Wielkopolski',0,0],
-            ['Zielona Góra',0,0]
+            ['Gorzów Wielkopolski',52.7325,15.2369],
+            ['Zielona Góra',51.9356,15.5062]
         ],
         'powiat_ziemski'=>
         [
@@ -141,7 +141,7 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Łódź',0,0],
+            ['Łódź',51.7592,19.456],
             ['Piotrków Trybunalski',0,0],
             ['Skierniewice',0,0]
         ],
@@ -176,7 +176,7 @@ $map =
         [
             ['Kraków',50.0605443,19.9417183],
             ['Nowy Sącz',0,0],
-            ['Tarnów',0,0]
+            ['Tarnów',50.0121,20.9858]
         ],
         'powiat_ziemski'=>
         [
@@ -256,7 +256,7 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Opole',0,0]
+            ['Opole',50.6751,17.9213]
         ],
         'powiat_ziemski'=>
         [
@@ -277,9 +277,9 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Rzeszów',0,0],
+            ['Rzeszów',50.0412,21.9991],
             ['Krosno',0,0],
-            ['Przemyśl',0,0],
+            ['Przemyśl',49.7839,22.7678],
             ['Tarnobrzeg',0,0]
         ],
         'powiat_ziemski'=>
@@ -311,9 +311,9 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Białystok',0,0],
+            ['Białystok',53.1325,23.1688],
             ['Łomża',0,0],
-            ['Suwałki',0,0]
+            ['Suwałki',54.1115,22.9308]
         ],
         'powiat_ziemski'=>
         [
@@ -337,10 +337,10 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Gdańsk',0,0],
-            ['Gdynia',0,0],
-            ['Słupsk',0,0],
-            ['Sopot',0,0]
+            ['Gdańsk',54.352,18.6466],
+            ['Gdynia',54.5189,18.5305],
+            ['Słupsk',54.4641,17.0285],
+            ['Sopot',54.4416,18.5601]
         ],
         'powiat_ziemski'=>
         [
@@ -366,21 +366,21 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Katowice',0,0],
-            ['Bielsko-Biała',0,0],
+            ['Katowice',50.2649,19.0238],
+            ['Bielsko-Biała',49.8224,19.0584],
             ['Bytom',0,0],
             ['Chorzów',0,0],
             ['Częstochowa',0,0],
             ['Dąbrowa Górnicza',0,0],
-            ['Gliwice',0,0],
+            ['Gliwice',50.2945,18.6714],
             ['Jastrzębie-Zdrój',0,0],
             ['Jaworzno',0,0],
-            ['Mysłowice',0,0],
+            ['Mysłowice',50.208,19.1661],
             ['Piekary Śląskie',0,0],
             ['Ruda Śląska',0,0],
             ['Rybnik',0,0],
             ['Siemianowice Śląskie',0,0],
-            ['Sosnowiec',0,0],
+            ['Sosnowiec',50.2863,19.1041],
             ['Świętochłowice',0,0],
             ['Tychy',0,0],
             ['Zabrze',0,0],
@@ -411,7 +411,7 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Kielce',0,0]
+            ['Kielce',50.8661,20.6286]
         ],
         'powiat_ziemski'=>
         [
@@ -434,7 +434,7 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Olsztyn',0,0],
+            ['Olsztyn',53.7784,20.4801],
             ['Elbląg',0,0]
         ],
         'powiat_ziemski'=>
@@ -464,7 +464,7 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Poznań',0,0],
+            ['Poznań',52.4064,16.9252],
             ['Kalisz',0,0],
             ['Konin',0,0],
             ['Leszno',0,0]
@@ -508,7 +508,7 @@ $map =
     [
         'powiat_grodzki'=>
         [
-            ['Szczecin',0,0],
+            ['Szczecin',51.9187,19.7128],
             ['Koszalin',0,0],
             ['Świnoujście',0,0]
         ],
