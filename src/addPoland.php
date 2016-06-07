@@ -269,11 +269,7 @@ $map =
             'namysłowski' => ['Namysłów',0,0],
             'nyski' => ['Nysa',0,0],
             'oleski' => ['Olesno',50.875,18.416667],
-<<<<<<< Updated upstream
             'opolski' => ['Opole',50.664722,17.926944],
-=======
-            'opolski' => ['Opole',0,0],
->>>>>>> Stashed changes
             'prudnicki' => ['Prudnik',0,0],
             'strzelecki' => ['Strzelce Opolskie',0,0]
         ]
