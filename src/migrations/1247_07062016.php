@@ -35,6 +35,7 @@ if ($testId) {
         )->add('Flag','mapa_liderow_2016_miasto_ap');
 
     echo 'all done';
+    exit;
 } else {
     echo 'run again to flag Aleksandrów Łódzki';
 }
