@@ -392,7 +392,7 @@ $RejonySZP = [
         ["Libiąż",50.1017761827,19.3118005371],
         ["Oświęcim II",50.034557,19.215857],
         ["Klucze",50.335400,19.565194],
-        ["Kocmyrzów - Luborzyca",0,0],
+        ["Kocmyrzów - Luborzyca",50.134187,20.121526],
         ["Kraków - Zwierzyniec",50.0581094,19.8642065],
         ["Kraków - Swoszowice",49.9821501,19.9523717],
         ["Zabierzów",50.1061095502,19.8279862976],
@@ -559,7 +559,7 @@ $RejonySZP = [
         ["Sztum",53.920998,19.030338],
         ["Gniew",53.854436677702,18.8224],
         ["Kolbudy",54.272633,18.471461],
-        ["Gdynia Chwarzno-Wiczlino",0,0],
+        ["Gdynia Chwarzno-Wiczlino",54.506541,18.410477],
         ["Władysławowo",54.790569,18.403789],
         ["Człuchów",53.667899,17.358777]
     ],

@@ -12,14 +12,14 @@ $map =
 [
     'dolnośląskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Wrocław',51.1079,17.0385],
             ['Jelenia Góra',0,0],
             ['Legnica',51.207,16.1553],
             ['Wałbrzych',0,0]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'bolesławiecki' => ['Bolesławiec',0,0],
             'dzierżoniowski' => ['Dzierżoniów',0,0],
@@ -51,14 +51,14 @@ $map =
     ],
     'kujawsko-pomorskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Bydgoszcz',53.1184692552,18.0181604004],
             ['Toruń',53.0119175901,18.5975175476],
             ['Włocławek',0,0],
             ['Grudziądz',0,0]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'aleksandrowski' => ['Aleksandrów Kujawski',0,0],
             'brodnicki' => ['Brodnica',0,0],
@@ -83,14 +83,14 @@ $map =
     ],
     'lubelskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Lublin',51.2465,22.5684],
             ['Biała Podlaska',52.0387,23.1445],
             ['Chełm',0,0],
             ['Zamość',0,0]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'bialski' => ['Biała Podlaska',52.033333,23.116667],
             'biłgorajski' => ['Biłgoraj',0,0],
@@ -116,12 +116,12 @@ $map =
     ],
     'lubuskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Gorzów Wielkopolski',52.7325,15.2369],
             ['Zielona Góra',51.9356,15.5062]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'gorzowski' => ['Gorzów Wielkopolski',52.730833,15.238333],
             'krośnieński' => ['Krosno Odrzańskie',1,1],
@@ -139,13 +139,13 @@ $map =
     ],
     'łódzkie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Łódź',51.7592,19.456],
             ['Piotrków Trybunalski',0,0],
             ['Skierniewice',0,0]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'bełchatowski' => ['Bełchatów',0,0],
             'brzeziński' => ['Brzeziny',0,0],
@@ -173,13 +173,13 @@ $map =
     ],
     'małopolskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Kraków',50.0605443,19.9417183],
             ['Nowy Sącz',0,0],
             ['Tarnów',50.0121,20.9858]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'bocheński' => ['Bochnia',0,0],
             'brzeski' => ['Brzesko',1,1],
@@ -204,7 +204,7 @@ $map =
     ],
     'mazowieckie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Warszawa',52.2343398678,21.0057550048],
             ['Ostrołęka',0,0],
@@ -212,7 +212,7 @@ $map =
             ['Radom',0,0],
             ['Siedlce',0,0]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'białobrzeski' => ['Białobrzegi',0,0],
             'ciechanowski' => ['Ciechanów',0,0],
@@ -255,11 +255,11 @@ $map =
     ],
     'opolskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Opole',50.6751,17.9213]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'brzeski' => ['Brzeg',0,0],
             'głubczycki' => ['Głubczyce',0,0],
@@ -269,21 +269,25 @@ $map =
             'namysłowski' => ['Namysłów',0,0],
             'nyski' => ['Nysa',0,0],
             'oleski' => ['Olesno',50.875,18.416667],
+<<<<<<< Updated upstream
             'opolski' => ['Opole',50.664722,17.926944],
+=======
+            'opolski' => ['Opole',0,0],
+>>>>>>> Stashed changes
             'prudnicki' => ['Prudnik',0,0],
             'strzelecki' => ['Strzelce Opolskie',0,0]
         ]
     ],
     'podkarpackie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Rzeszów',50.0412,21.9991],
             ['Krosno',0,0],
             ['Przemyśl',49.7839,22.7678],
             ['Tarnobrzeg',0,0]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'bieszczadzki' => ['Ustrzyki Dolne',0,0],
             'brzozowski' => ['Brzozów',0,0],
@@ -310,13 +314,13 @@ $map =
     ],
     'podlaskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Białystok',53.1325,23.1688],
             ['Łomża',0,0],
             ['Suwałki',54.1115,22.9308]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'augustowski' => ['Augustów',0,0],
             'białostocki' => ['Białystok',53.135278,23.145556],
@@ -336,14 +340,14 @@ $map =
     ],
     'pomorskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Gdańsk',54.352,18.6466],
             ['Gdynia',54.5189,18.5305],
             ['Słupsk',54.4641,17.0285],
             ['Sopot',54.4416,18.5601]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'bytowski' => ['Bytów',0,0],
             'chojnicki' => ['Chojnice',0,0],
@@ -365,7 +369,7 @@ $map =
     ],
     'śląskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Katowice',50.2649,19.0238],
             ['Bielsko-Biała',49.8224,19.0584],
@@ -387,7 +391,7 @@ $map =
             ['Zabrze',0,0],
             ['Żory',0,0]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'będziński' => ['Będzin',0,0],
             'bielski' => ['Bielsko-Biała',49.8225,19.044444],
@@ -410,11 +414,11 @@ $map =
     ],
     'świętokrzyskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Kielce',50.8661,20.6286]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'buski' => ['Busko-Zdrój',0,0],
             'jędrzejowski' => ['Jędrzejów',0,0],
@@ -433,12 +437,12 @@ $map =
     ],
     'warmińsko-mazurskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Olsztyn',53.7784,20.4801],
             ['Elbląg',0,0]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'bartoszycki' => ['Bartoszyce',0,0],
             'braniewski' => ['Braniewo',0,0],
@@ -463,14 +467,14 @@ $map =
     ],
     'wielkopolskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Poznań',52.4064,16.9252],
             ['Kalisz',0,0],
             ['Konin',0,0],
             ['Leszno',0,0]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'chodzieski' => ['Chodzież',0,0],
             'czarnkowsko-trzcianecki' => ['Czarnków',0,0],
@@ -507,13 +511,13 @@ $map =
     ],
     'zachodniopomorskie'=>
     [
-        'powiat_grodzki'=>
+        'miasto_na_prawach_powiatu'=>
         [
             ['Szczecin',51.9187,19.7128],
             ['Koszalin',0,0],
             ['Świnoujście',0,0]
         ],
-        'powiat_ziemski'=>
+        'powiat'=>
         [
             'białogardzki' => ['Białogard',54.003056,15.992222],
             'choszczeński' => ['Choszczno',0,0],
@@ -542,8 +546,8 @@ $administrativeDef = (new StructDefinition)
 
 $wioStruct->structQuery($administrativeDef)
     ->add('NodeType', 'state')
-    ->add('NodeType', 'powiat_grodzki')
-    ->add('NodeType', 'powiat_ziemski')
+    ->add('NodeType', 'miasto_na_prawach_powiatu')
+    ->add('NodeType', 'powiat')
     ->add('NodeType', 'city');
 
 $stateId = $wioStruct->structQuery(
@@ -555,13 +559,13 @@ $stateId = $wioStruct->structQuery(
 $powiatGrodzkiId = $wioStruct->structQuery(
         (new StructDefinition)
             ->networkName('administrative')
-            ->nodeTypeName('powiat_grodzki')
+            ->nodeTypeName('miasto_na_prawach_powiatu')
         )->getId('NodeType');
 
 $powiatZiemskiId = $wioStruct->structQuery(
         (new StructDefinition)
             ->networkName('administrative')
-            ->nodeTypeName('powiat_ziemski')
+            ->nodeTypeName('powiat')
         )->getId('NodeType');
 
 $cityId = $wioStruct->structQuery(
@@ -584,7 +588,7 @@ foreach ($map as $wojNazwa => $wojData)
         )->getId('Node');
 
 
-    foreach ($wojData['powiat_grodzki'] as $powiatGrodzki)
+    foreach ($wojData['miasto_na_prawach_powiatu'] as $powiatGrodzki)
     {
         $wioStruct->structQuery((new StructDefinition)->nodeTypeId($powiatGrodzkiId))
             ->add('Node',$powiatGrodzki[0],$powiatGrodzki[1],$powiatGrodzki[2])
@@ -604,7 +608,7 @@ foreach ($map as $wojNazwa => $wojData)
         $dodaneMiasta[$powiatGrodzki[0]] = true;
     }
 
-    foreach ($wojData['powiat_ziemski'] as $powiatZiemski=>$miastoWpowiecie)
+    foreach ($wojData['powiat'] as $powiatZiemski=>$miastoWpowiecie)
     {
 
         $wioStruct->structQuery((new StructDefinition)->nodeTypeId($powiatZiemskiId))

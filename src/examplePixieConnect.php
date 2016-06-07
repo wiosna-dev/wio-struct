@@ -2,8 +2,8 @@
 #creating PIXIE for tests
 $config = array(
             'driver'    => 'mysql',
-            'host'      => '127.0.0.1',
-            'database'  => 'wio_struct',
+            'host'      => 'superw.loc',
+            'database'  => 'super_w',
             'username'  => 'root',
             'password'  => '',
             'charset'   => 'utf8',
