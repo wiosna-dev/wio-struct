@@ -29,12 +29,14 @@ $testId = $wioStruct->structQuery(
     )->getId('Node');
 
 if ($testId) {
-    echo 'Aleksandrów Łódzki already exists';
-
     $wioStruct->structQuery(
         (new StructDefinition)
             ->nodeId($testId)
         )->add('Flag','mapa_liderow_2016_miasto_ap');
+
+    echo 'all done';
+} else {
+    echo 'run again to flag Aleksandrów Łódzki';
 }
 
 
