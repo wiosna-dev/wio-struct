@@ -14,7 +14,6 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "guzzlehttp/guzzle": "^6.1",
         "usmanhalalit/pixie": "dev-master#9555c41"
     },
     "autoload": {
