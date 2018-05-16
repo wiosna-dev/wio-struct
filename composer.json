@@ -14,7 +14,7 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "usmanhalalit/pixie": "dev-master#9555c41"
+        "usmanhalalit/pixie": "^2.0"
     },
     "autoload": {
         "psr-4": {"WioStruct\\": "src/"}
