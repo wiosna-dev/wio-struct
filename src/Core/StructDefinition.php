@@ -34,26 +34,26 @@ class StructDefinition
 
     private $values = [
         'Network' => [
-            'id' => 'networkId',
+            'node_network_id' => 'networkId',
             'name' => 'networkName'
         ],
         'NodeType' => [
-            'id' => 'nodeTypeId',
+            'node_type_id' => 'nodeTypeId',
             'name' => 'nodeTypeName'
         ],
         'Node' => [
-            'id' => 'nodeId',
+            'node_id' => 'nodeId',
             'name' => 'nodeName',
             'lat' => 'nodeLat',
             'lng' => 'nodeLng'
         ],
         'FlagType' => [
-            'id' => 'flagTypeId',
+            'node_flag_type_id' => 'flagTypeId',
             'name' => 'flagTypeName'
         ],
         'Link' => [
-            'parentId' => 'linkParent',
-            'childrenId' => 'linkChildren'
+            'parent_node_id' => 'linkParent',
+            'child_node_id' => 'linkChildren'
         ]
     ];
 
