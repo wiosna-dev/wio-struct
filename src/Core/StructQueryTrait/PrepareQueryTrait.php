@@ -89,7 +89,7 @@ trait PrepareQueryTrait
             $tableA = $this->tableNames[$leftTableName];
             $tableB = $this->tableNames[$rightTableName];
             $this->query->join(
-                [ $tableB['table'] => $this->tablePrefix.$tableB['as'] ],
+                [ $tableB['table'], $this->tablePrefix.$tableB['as'] ],
                 $this->tablePrefix.$tableA['as'].'.'.$joinKeys[0],
                 '=',
                 $this->tablePrefix.$tableB['as'].'.'.$joinKeys[1]
@@ -128,7 +128,7 @@ trait PrepareQueryTrait
         $tableNode = $this->tableNames['Node'];
 
         $this->query->join(
-            [ $tableLink['table'] => $newPrefix.$tableLink['as'] ],
+            [ $tableLink['table'], $newPrefix.$tableLink['as'] ],
             $this->tablePrefix.$tableNode['as'].'.id',
             '=',
             $newPrefix.$tableLink['as'].'.'.$varTab['Node1']
@@ -148,7 +148,7 @@ trait PrepareQueryTrait
         $tableNode = $this->tableNames['Node'];
 
         $this->query->join(
-            [ $tableLink['table'] => $newPrefix.$tableLink['as'] ],
+            [ $tableLink['table'], $newPrefix.$tableLink['as'] ],
             $this->tablePrefix.$tableNode['as'].'.id',
             '=',
             $newPrefix.$tableLink['as'].'.'.$varTab['Node1']
@@ -156,7 +156,7 @@ trait PrepareQueryTrait
         $this->queryTables[$newPrefix.'Link'] = true;
 
         $this->query->join(
-            [ $tableNode['table'] => $newPrefix.$tableNode['as'] ],
+            [ $tableNode['table'], $newPrefix.$tableNode['as'] ],
             $newPrefix.$tableNode['as'].'.id',
             '=',
             $newPrefix.$tableLink['as'].'.'.$varTab['Node2']

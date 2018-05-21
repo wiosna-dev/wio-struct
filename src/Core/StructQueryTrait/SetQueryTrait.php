@@ -33,7 +33,7 @@ trait SetQueryTrait
             {
                 $joinProps = $this->joinKeys[ $tableA['as'] ][ $tableB['as'] ];
                 $this->query->join(
-                    [$tableB['table'] => $tableB['as']],
+                    [$tableB['table'], $tableB['as']],
                     $tableA['as'].'.'.$joinProps[0],
                     '=',
                     $tableB['as'].'.'.$joinProps[1]
