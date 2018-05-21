@@ -19,12 +19,12 @@ class StructLink
         $linkId = $this->qb->table('wio_struct_links')
                             ->where('node_parent_id',$parentId)
                             ->where('node_children_id',$childrenId)
-                            ->select('id')
+                            ->select('node_link_id')
                             ->first();
 
         if ($linkId != null)
         {
-            return $linkId->id;
+            return $linkId->node_link_id;
         }
         return false;
     }

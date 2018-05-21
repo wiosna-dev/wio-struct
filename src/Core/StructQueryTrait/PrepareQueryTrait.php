@@ -129,7 +129,7 @@ trait PrepareQueryTrait
 
         $this->query->join(
             [ $tableLink['table'], $newPrefix.$tableLink['as'] ],
-            $this->tablePrefix.$tableNode['as'].'.id',
+            $this->tablePrefix.$tableNode['as'].'.node_id',
             '=',
             $newPrefix.$tableLink['as'].'.'.$varTab['Node1']
         );
@@ -149,7 +149,7 @@ trait PrepareQueryTrait
 
         $this->query->join(
             [ $tableLink['table'], $newPrefix.$tableLink['as'] ],
-            $this->tablePrefix.$tableNode['as'].'.id',
+            $this->tablePrefix.$tableNode['as'].'.node_id',
             '=',
             $newPrefix.$tableLink['as'].'.'.$varTab['Node1']
         );
@@ -157,7 +157,7 @@ trait PrepareQueryTrait
 
         $this->query->join(
             [ $tableNode['table'], $newPrefix.$tableNode['as'] ],
-            $newPrefix.$tableNode['as'].'.id',
+            $newPrefix.$tableNode['as'].'.node_id',
             '=',
             $newPrefix.$tableLink['as'].'.'.$varTab['Node2']
         );

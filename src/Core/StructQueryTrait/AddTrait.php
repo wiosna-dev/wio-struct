@@ -95,12 +95,12 @@ trait AddTrait
             $answer = $this->qb
                            ->table($this->tableNames['FlagType']['table'])
                            ->where('name', $flagTypeData)
-                           ->select('id')
+                           ->select('node_flag_type_id')
                            ->first();
 
-            if (isset($answer->id))
+            if (isset($answer->node_flag_type_id))
             {
-                return $answer->id;
+                return $answer->node_flag_type_id;
             }
             return false;
         }
