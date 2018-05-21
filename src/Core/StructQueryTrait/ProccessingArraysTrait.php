@@ -158,7 +158,7 @@ trait ProccessingArraysTrait
     [
         'Node' => [
             'Node' => [
-                'id' => 'NodeId',
+                'node_id' => 'NodeId',
                 'name' => 'NodeName',
                 'lat' => 'NodeLat',
                 'lng' => 'NodeLng',
@@ -170,50 +170,50 @@ trait ProccessingArraysTrait
                 'name' => 'Network'
             ],
             'Flag' => [
-                'flag_data' => 'FlagData'
+                'data' => 'FlagData'
             ],
             'FlagType' => [
                 'name' => 'FlagType'
             ],
             'ParentNode' => [
-                'id' => 'ParentNodeId',
+                'parent_node_id' => 'ParentNodeId',
                 'name' => 'ParentNodeName'
             ],
             'ParentNodeType' => [
-                'id' => 'ParentNodeTypeId',
+                'node_type_id' => 'ParentNodeTypeId',
                 'name' => 'ParentNodeTypeName'
             ],
             'ParentNetwork' => [
-                'id' => 'ParentNetworkId',
+                'node_network_id' => 'ParentNetworkId',
                 'name' => 'ParentNetworkName'
             ],
             'ChildrenNode' => [
-                'id' => 'ChildrenNodeId',
+                'child_node_id' => 'ChildrenNodeId',
                 'name' => 'ChildrenNodeName'
             ],
             'ChildrenNodeType' => [
-                'id' => 'ChildrenNodeTypeId',
+                'node_type_id' => 'ChildrenNodeTypeId',
                 'name' => 'ChildrenNodeTypeName'
             ],
             'ChildrenNetwork' => [
-                'id' => 'ChildrenNetworkId',
+                'node_network_id' => 'ChildrenNetworkId',
                 'name' => 'ChildrenNetworkName'
             ]
         ],
         'NodeType' => [
             'NodeType' => [
-                'id'  => 'NodeTypeId',
-                'network_id'  => 'NodeTypeNetworkId',
+                'node_type_id'  => 'NodeTypeId',
+                'node_network_id'  => 'NodeTypeNetworkId',
                 'name' => 'NodeType',
             ],
             'Network' => [
-                'id' => 'NetworkId',
+                'node_network_id' => 'NetworkId',
                 'name' => 'NetworkName'
             ]
         ],
         'Network' => [
             'Network' => [
-                'id' => 'NetworkId',
+                'node_network_id' => 'NetworkId',
                 'name' => 'NetworkName'
             ]
         ]
