@@ -176,7 +176,7 @@ trait ProccessingArraysTrait
                 'name' => 'FlagType'
             ],
             'ParentNode' => [
-                'parent_node_id' => 'ParentNodeId',
+                'node_id' => 'ParentNodeId',
                 'name' => 'ParentNodeName'
             ],
             'ParentNodeType' => [
@@ -188,7 +188,7 @@ trait ProccessingArraysTrait
                 'name' => 'ParentNetworkName'
             ],
             'ChildrenNode' => [
-                'child_node_id' => 'ChildrenNodeId',
+                'node_id' => 'ChildrenNodeId',
                 'name' => 'ChildrenNodeName'
             ],
             'ChildrenNodeType' => [
@@ -203,7 +203,7 @@ trait ProccessingArraysTrait
         'NodeType' => [
             'NodeType' => [
                 'node_type_id'  => 'NodeTypeId',
-                'node_network_id'  => 'NodeTypeNetworkId',
+                'network_id'  => 'NodeTypeNetworkId',
                 'name' => 'NodeType',
             ],
             'Network' => [
