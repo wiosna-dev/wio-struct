@@ -6,35 +6,35 @@ trait ProccessingArraysTrait
     private $tableNames =
     [
         'Network' => [
-            'table' => 'wio_struct_networks',
+            'table' => 'hydra.wio_struct_node_networks',
             'as' => 'Network'
         ],
         'NodeType' => [
-            'table' => 'wio_struct_node_types',
+            'table' => 'hydra.wio_struct_node_types',
             'as' => 'NodeType'
         ],
         'Node' => [
-            'table' => 'wio_struct_nodes',
+            'table' => 'hydra.wio_struct_nodes',
             'as' => 'Node'
         ],
         'Flag' => [
-            'table' => 'wio_struct_flags',
+            'table' => 'hydra.wio_struct_node_flags',
             'as' => 'Flag'
         ],
         'FlagType' => [
-            'table' => 'wio_struct_flag_types',
+            'table' => 'hydra.wio_struct_node_flag_types',
             'as' => 'FlagType'
         ],
         'Link' => [
-            'table' => 'wio_struct_links',
+            'table' => 'hydra.wio_struct_node_links',
             'as' => 'Link'
         ],
         'LinkParent' => [
-            'table' => 'wio_struct_links',
+            'table' => 'hydra.wio_struct_node_links',
             'as' => 'LinkParent'
         ],
         'LinkChildren' => [
-            'table' => 'wio_struct_links',
+            'table' => 'hydra.wio_struct_node_links',
             'as' => 'LinkChildren'
         ]
     ];
@@ -43,24 +43,24 @@ trait ProccessingArraysTrait
     private $structDefinitionValues =
     [
         'networkId' => [
-            'Network' => 'id',
-            'NodeType' => 'network_id'
+            'Network' => 'node_network_id',
+            'NodeType' => 'node_network_id'
         ],
         'networkName' => [
             'Network' => 'name'
         ],
         'nodeTypeId' => [
-            'NodeType' => 'id',
+            'NodeType' => 'node_type_id',
             'Node' => 'node_type_id'
         ],
         'nodeTypeName' => [
             'NodeType' => 'name'
         ],
         'nodeId' => [
-            'Node' => 'id',
+            'Node' => 'node_id',
             'Flag' => 'node_id',
-            'LinkParent' => 'node_parent_id',
-            'LinkChildren' => 'node_children_id'
+            'LinkParent' => 'parent_node_id',
+            'LinkChildren' => 'child_node_id'
         ],
         'nodeName' => [
             'Node' => 'name',
@@ -72,8 +72,8 @@ trait ProccessingArraysTrait
             'Node' => 'lng'
         ],
         'flagTypeId' => [
-            'FlagType' => 'id',
-            'Flag' => 'flag_type_id'
+            'FlagType' => 'node_flag_type_id',
+            'Flag' => 'node_flag_type_id'
         ],
         'flagTypeName' => [
             'FlagType' => 'name'
@@ -85,13 +85,13 @@ trait ProccessingArraysTrait
     [
         'linkParent' => [
             'Prefix' => 'Parent',
-            'Node1' => 'node_children_id',
-            'Node2' => 'node_parent_id'
+            'Node1' => 'child_node_id',
+            'Node2' => 'parent_node_id'
         ],
         'linkChildren' => [
             'Prefix' => 'Children',
-            'Node1' => 'node_parent_id',
-            'Node2' => 'node_children_id'
+            'Node1' => 'parent_node_id',
+            'Node2' => 'child_node_id'
         ]
     ];
 
@@ -99,18 +99,18 @@ trait ProccessingArraysTrait
     private $joinKeys =
     [
         'Node' => [
-          'NodeType' => ['node_type_id','id'],
-          'Flag' => ['id','node_id']
+          'NodeType' => ['node_type_id','node_type_id'],
+          'Flag' => ['node_id','node_id']
         ],
         'NodeType' => [
-            'Network' => ['network_id','id']
+            'Network' => ['node_network_id','node_network_id']
         ],
         'Flag' => [
-            'Node' => ['node_id','id'],
-            'FlagType' => ['flag_type_id','id']
+            'Node' => ['node_id','node_id'],
+            'FlagType' => ['node_flag_type_id','node_flag_type_id']
         ],
         'FlagType' => [
-            'Flag' => ['id','flag_type_id']
+            'Flag' => ['node_flag_type_id','node_flag_type_id']
         ]
     ];
 
@@ -127,8 +127,8 @@ trait ProccessingArraysTrait
         ],
         'NodeType' => [
             'requireId' => 'Network',
-            'columns' => ['network_id'=>'requiredId', 'name'=>0],
-            'check' => ['network_id','name']
+            'columns' => ['node_network_id'=>'requiredId', 'name'=>0],
+            'check' => ['node_network_id','name']
         ],
         'Node' => [
             'requireId' => 'NodeType',
@@ -137,18 +137,18 @@ trait ProccessingArraysTrait
         ],
         'Flag' => [
             'requireId' => 'Node',
-            'columns' => ['node_id'=>'requiredId', 'flag_type_id'=>'requireFlagTypeId', 'flag_data'=>1],
-            'check' => ['node_id','flag_type_id']
+            'columns' => ['node_id'=>'requiredId', 'node_flag_type_id'=>'requireFlagTypeId', 'flag_data'=>1],
+            'check' => ['node_id','node_flag_type_id']
         ],
         'LinkParent' => [
             'requireId' => 'Node',
-            'columns' => ['node_children_id'=>'requiredId','node_parent_id'=>'requireNodeId'],
-            'check' => ['node_children_id','node_parent_id']
+            'columns' => ['child_node_id'=>'requiredId','parent_node_id'=>'requireNodeId'],
+            'check' => ['child_node_id','parent_node_id']
         ],
         'LinkChildren' => [
             'requireId' => 'Node',
-            'columns' => ['node_children_id'=>'requiredId','node_parent_id'=>'requireNodeId'],
-            'check' => ['node_children_id','node_parent_id']
+            'columns' => ['child_node_id'=>'requiredId','parent_node_id'=>'requireNodeId'],
+            'check' => ['child_node_id','parent_node_id']
         ]
     ];
 
@@ -287,35 +287,35 @@ trait ProccessingArraysTrait
     private $possibleJoins = [
         'Node' => [
             'NodeType' => [
-                'NodeType' => ['node_type_id','id']
+                'NodeType' => ['node_type_id','node_type_id']
             ],
             'Network' => [
-                'NodeType' => ['node_type_id','id'],
-                'Network' => ['network_id','id']
+                'NodeType' => ['node_type_id','node_type_id'],
+                'Network' => ['node_network_id','node_network_id']
             ],
             'FlagType' => [
-                'Flag' => ['id','node_id'],
-                'FlagType' => ['flag_type_id','id'],
+                'Flag' => ['node_id','node_id'],
+                'FlagType' => ['node_flag_type_id','node_flag_type_id'],
             ]
 
         ],
         'NodeType' => [
             'Network' => [
-                'Network' => ['network_id','id']
+                'Network' => ['node_network_id','node_network_id']
             ]
         ],
         'LinkParent' => [
             'Node' => [
-                'Node' => ['node_parent_id','id']
+                'Node' => ['parent_node_id','node_id']
             ],
             'NodeType' => [
-                'Node' => ['node_parent_id','id'],
-                'NodeType' => ['node_type_id','id']
+                'Node' => ['parent_node_id','node_id'],
+                'NodeType' => ['node_type_id','node_type_id']
             ],
             'Network' => [
-                'Node' => ['node_parent_id','id'],
-                'NodeType' => ['node_type_id','id'],
-                'Network' => ['network_id','id']
+                'Node' => ['parent_node_id','node_id'],
+                'NodeType' => ['node_type_id','node_type_id'],
+                'Network' => ['node_network_id','node_network_id']
             ]
         ],
     ];
