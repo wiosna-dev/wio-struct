@@ -1,5 +1,6 @@
 {
     "name": "wiosna-dev/wio-struct",
+    "version": "2.0.0",
     "description": "wio-struct",
     "license": "MPL 2.0",
     "authors": [
