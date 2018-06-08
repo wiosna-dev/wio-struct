@@ -12,6 +12,9 @@ class WioStruct
 
     function __construct(\Pixie\QueryBuilder\QueryBuilderHandler $qb)
     {
+        if (false === defined('HYDRA_DATABASE')) {
+            throw new \Exception('HYDRA_DATABASE constant is not defined.');
+        }
         $this->qb = $qb;
         $this->errorLog = new ErrorLog();
     }

@@ -6,35 +6,35 @@ trait ProccessingArraysTrait
     private $tableNames =
     [
         'Network' => [
-            'table' => 'hydra.wio_struct_node_networks',
+            'table' => HYDRA_DATABASE.'.wio_struct_node_networks',
             'as' => 'Network'
         ],
         'NodeType' => [
-            'table' => 'hydra.wio_struct_node_types',
+            'table' => HYDRA_DATABASE.'.wio_struct_node_types',
             'as' => 'NodeType'
         ],
         'Node' => [
-            'table' => 'hydra.wio_struct_nodes',
+            'table' => HYDRA_DATABASE.'.wio_struct_nodes',
             'as' => 'Node'
         ],
         'Flag' => [
-            'table' => 'hydra.wio_struct_node_flags',
+            'table' => HYDRA_DATABASE.'.wio_struct_node_flags',
             'as' => 'Flag'
         ],
         'FlagType' => [
-            'table' => 'hydra.wio_struct_node_flag_types',
+            'table' => HYDRA_DATABASE.'.wio_struct_node_flag_types',
             'as' => 'FlagType'
         ],
         'Link' => [
-            'table' => 'hydra.wio_struct_node_links',
+            'table' => HYDRA_DATABASE.'.wio_struct_node_links',
             'as' => 'Link'
         ],
         'LinkParent' => [
-            'table' => 'hydra.wio_struct_node_links',
+            'table' => HYDRA_DATABASE.'.wio_struct_node_links',
             'as' => 'LinkParent'
         ],
         'LinkChildren' => [
-            'table' => 'hydra.wio_struct_node_links',
+            'table' => HYDRA_DATABASE.'.wio_struct_node_links',
             'as' => 'LinkChildren'
         ]
     ];
