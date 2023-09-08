@@ -41,7 +41,16 @@ trait PrepareQueryTrait
 
             $variable = $this->currentStrDef->$varName;
 
-            $table = each($varProperties);
+            $key = key($varProperties);
+            $value = current($varProperties);
+            $each = is_null($key) ? false : [
+                1        => $value,
+                'value'    => $value,
+                0        => $key,
+                'key'    => $key,
+            ];
+            $table = $each;
+
             $tableName = $table['key'];
             $tableVariableName = $table['value'];
 
